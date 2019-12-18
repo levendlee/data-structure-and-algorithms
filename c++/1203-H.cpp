@@ -79,7 +79,7 @@ public:
             }
         }
 
-        // Output sorted itemsRRR
+        // Output sorted items
         vector<int> res;
         for (auto& group : sorted_groups) {
             for (auto& item : sorted_items[group]) {
