@@ -1,6 +1,9 @@
 class Solution {
 public:
     int findKthNumber(int m, int n, int k) {
+        if (m > n) {
+            std::swap(m, n);
+        }
         int lo = 1, hi = k, mid, cnt, idx;
         int candidate;
         while (lo < hi) {
