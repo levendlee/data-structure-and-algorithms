@@ -3,7 +3,7 @@ public:
     int jump(vector<int>& nums) {
         const int n = nums.size();
         if (n <= 1) return 0;
-        
+
         int step = 0;
         int cur = 0, bound = 0;
         while (bound < n-1 ) {
