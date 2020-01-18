@@ -26,10 +26,6 @@ public:
 
         for (int j = 0; j < ncol; ++j) {
             finder(0, j, 1, 0);
-            finder(0, j, 1, 1);
-            finder(0, j, 1, -1);
-            finder(nrow - 1, j, -1, 1);
-            finder(nrow - 1, j, -1, -1);
         }
 
         return longest;
