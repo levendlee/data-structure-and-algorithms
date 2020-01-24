@@ -48,3 +48,56 @@ public:
         return querySegmentTree(segment_tree_, 0, nums_.size()-1, i, j, 0);
     }
 };
+
+class NumArray {
+private:
+    int n_;
+    vector<int> nums_;
+    vector<int> st_;
+
+    void update_(const int tree_idx, const int ss, const int se, const int idx, const int diff) {
+        if (ss <= idx && idx <= se) {
+            if (st_.size() <= tree_idx) st_.resize(tree_idx + 1);
+            st_[tree_idx-1] += diff;
+            if (ss == se) return;
+            int mid = ss + (se - ss) / 2;
+            update_(tree_idx * 2, ss, mid, idx, diff);
+            update_(tree_idx * 2 + 1, mid + 1, se, idx, diff);
+        }
+    }
+
+    int query_(const int tree_idx, const int ss, const int se, const int qs, const int qe) {
+        if (qe < ss || qs > se) {
+            return 0;
+        } else if (qs <= ss && qe >= se) {
+            return st_[tree_idx-1];
+        } else {
+            int mid = ss + (se - ss) / 2;
+            return query_(tree_idx * 2, ss, mid, qs, qe) + query_(tree_idx * 2 + 1, mid + 1, se, qs, qe);
+        }
+    }
+
+public:
+    NumArray(vector<int>& nums) : nums_(nums) {
+        n_ = nums.size();
+        for (int i = 0; i < n_; ++i) {
+            update_(1, 0, n_ - 1, i, nums[i]);
+        }
+    }
+
+    void update(int i, int val) {
+        update_(1, 0, n_ - 1, i, val - nums_[i]);
+        nums_[i] = val;
+    }
+
+    int sumRange(int i, int j) {
+        return query_(1, 0, n_ - 1, i, j);
+    }
+};
+
+/**
+ * Your NumArray object will be instantiated and called as such:
+ * NumArray* obj = new NumArray(nums);
+ * obj->update(i,val);
+ * int param_2 = obj->sumRange(i,j);
+ */
