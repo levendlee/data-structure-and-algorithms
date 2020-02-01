@@ -3,7 +3,7 @@ public:
     bool canPartition(vector<int>& nums) {
         int sum = std::accumulate(nums.begin(), nums.end(), 0);
         if (sum % 2) return false;
-        
+
         const int half = sum / 2;
         vector<bool> mem(half, false);
         mem[0] = true;
