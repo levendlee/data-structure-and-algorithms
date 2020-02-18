@@ -11,7 +11,7 @@ class Solution {
 private:
     int calcSize(TreeNode* root) {
         if (!root) return 0;
-        
+
         auto lh = 1, rh = 1, mh = 1;
         auto node = root;
         while (node = node->left) ++lh;
