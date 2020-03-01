@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+import argparse
 import collections
 import os
 import re
@@ -109,5 +111,10 @@ def rename_code_files(src_dir: str, dst_dir: str) -> None:
             file.write('\n'.join(content))
 
 
-rename_code_files("../c++", "c++_tmp")
-rename_code_files("../python", "python_tmp")
+# rename_code_files("../c++", "c++_tmp")
+# rename_code_files("../python", "python_tmp")
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument('src_dir', type=str)
+    args = parser.parse_args()
+    rename_code_files(args.src_dir, "tmp")

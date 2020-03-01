@@ -1,0 +1,2 @@
+Rank	Name	Score	Finish Time 	Q1 (3)	Q2 (5)	Q3 (5)	Q4 (6)
+127 / 8106	levendlee 	19	1:08:05	 0:04:18	 0:20:50  3	 0:43:05  1	 0:35:28  1
