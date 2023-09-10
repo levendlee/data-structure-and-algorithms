@@ -21,3 +21,23 @@ public:
         return res;
     }
 };
+
+// 2023/09/10
+
+class Solution {
+public:
+    vector<int> productExceptSelf(vector<int>& nums) {
+        const int n = nums.size();
+        vector<int> l_accu(n, 1);
+        for (int i = 0; i < n - 1; ++i) {
+            l_accu[i + 1] = l_accu[i] * nums[i];
+        }
+        int r_accu = 1;
+        vector<int> res(n, 1);
+        for (int i = n - 1; i >= 0; --i) {
+            res[i] = l_accu[i] * r_accu;
+            r_accu *= nums[i];
+        }
+        return res;
+    }
+};
