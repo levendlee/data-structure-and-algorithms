@@ -38,3 +38,47 @@ public:
         return res;
     }
 };
+
+// 2023/09/09
+
+class Solution {
+public:
+    vector<string> findItinerary(vector<vector<string>>& tickets) {
+        unordered_map<string, vector<string>> tickets_map;
+
+        for (const auto& t : tickets) {
+            tickets_map[t[0]].push_back(t[1]);
+        }
+        for (auto& [src, dst_vec] : tickets_map) {
+            sort(dst_vec.begin(), dst_vec.end());
+        }
+
+        const int num_tickets = tickets.size();
+        vector<string> itinerary;
+
+        function<bool(const string&)> dfs;
+        dfs = [&](const string& src) -> bool {
+            itinerary.push_back(src);
+            if (itinerary.size() == num_tickets + 1) {
+                return true;
+            }
+
+            for (auto& dst : tickets_map[src]) {
+                if (dst.empty()) {
+                    continue;
+                }
+                string hold = dst;
+                dst = "";
+                if (dfs(hold)) {
+                    return true;
+                }
+                dst = hold;
+            }
+
+            itinerary.pop_back();
+            return false;
+        };
+        dfs("JFK");
+        return itinerary;
+    }
+};
