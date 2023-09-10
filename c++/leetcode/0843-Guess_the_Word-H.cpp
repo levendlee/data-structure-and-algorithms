@@ -60,3 +60,50 @@ public:
         }
     }
 };
+
+
+// 2023/09/09
+class Solution {
+public:
+    void findSecretWord(vector<string>& words, Master& master) {
+        auto count_matches = [](const string& s0, const string& s1) {
+            int cnt = 0;
+            for (int i = 0; i < 6; ++i) {
+                cnt += s0[i] == s1[i];
+            }
+            return cnt;
+        };
+
+        const int num_words = words.size();
+        std::vector<std::vector<std::vector<int>>> num_matches(num_words, std::vector<std::vector<int>>(7));
+        for (int i = 0; i < num_words; ++i) {
+            for (int j = i; j < num_words; ++j) {
+                int cnt = count_matches(words[i], words[j]);
+                num_matches[i][cnt].push_back(j);
+                num_matches[j][cnt].push_back(i);
+            }
+        }
+
+        std::vector<int> candidates(num_words);
+        for (int i = 0; i < num_words; ++i) {
+            candidates[i] = i;
+        }
+        int num_guess = 0;
+        while (++num_guess <= 30) {
+            int pick_idx = (std::rand() + 1) % candidates.size();
+            int pick_num = candidates[pick_idx];
+            int num_match = master.guess(words[pick_num]);
+            if (num_match == 6) {
+                return;
+            }
+            std::vector<int> new_candidates;
+            std::set_intersection(candidates.begin(), candidates.end(),
+                                 num_matches[pick_num][num_match].begin(),
+                                 num_matches[pick_num][num_match].end(),
+                                 std::back_inserter(new_candidates));
+            candidates = std::move(new_candidates);
+        }
+
+
+    }
+};
