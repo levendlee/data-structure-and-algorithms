@@ -22,3 +22,38 @@ public:
         return step;
     }
 };
+
+// 2023/09/10
+
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        const int n = nums.size();
+        vector<int> min_jumps(n, INT_MAX);
+        min_jumps[0] = 0;
+        for (int i = 0; i < n; ++i) {
+            if (min_jumps[i] == INT_MAX) continue;
+            for (int j = 1; j <= nums[i] && i + j < n; ++j) {
+                min_jumps[i + j] = std::min(min_jumps[i + j], min_jumps[i] + 1);
+            }
+        }
+        return min_jumps[n - 1];
+    }
+};
+
+class Solution {
+public:
+    int jump(vector<int>& nums) {
+        const int n = nums.size();
+        for (int i = 1; i < n; ++i) {
+            nums[i] = std::max(nums[i] + i, nums[i - 1]);
+        }
+        int jumps = 0;
+        int idx = 0;
+        while (idx < n - 1) {
+            ++jumps;
+            idx = nums[idx];
+        }
+        return jumps;
+    }
+};
