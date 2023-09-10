@@ -14,3 +14,19 @@ public:
         return true;
     }
 };
+
+// 2023/09/10
+class Solution {
+public:
+    bool canJump(vector<int>& nums) {
+        const int n = nums.size();
+        int max_idx = nums[0];
+        for (int i = 1; i < n; ++i) {
+            if (max_idx < i) {
+                break;
+            }
+            max_idx = std::max(max_idx, i + nums[i]);
+        }
+        return max_idx >= n - 1;
+    }
+};
