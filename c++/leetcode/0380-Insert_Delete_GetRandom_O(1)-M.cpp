@@ -51,3 +51,43 @@ public:
  * bool param_2 = obj->remove(val);
  * int param_3 = obj->getRandom();
  */
+
+
+// 2023/09/10
+class RandomizedSet {
+public:
+    RandomizedSet() {
+        
+    }
+    
+    bool insert(int val) {
+        if (index_map_.count(val)) {
+            return false;
+        }
+        storage_vec_.push_back(val);
+        index_map_[val] = storage_vec_.size() - 1;
+        return true;
+    }
+    
+    bool remove(int val) {
+        if (!index_map_.count(val)) {
+            return false;
+        }
+        int index = index_map_[val];
+        int back_val = storage_vec_.back();
+        std::swap(storage_vec_[index], storage_vec_.back());
+        std::swap(index_map_[val], index_map_[back_val]);
+        storage_vec_.pop_back();
+        index_map_.erase(val);
+        return true;
+    }
+    
+    int getRandom() {
+        int pick = std::rand() % storage_vec_.size();
+        return storage_vec_[pick];
+    }
+
+private:
+    vector<int> storage_vec_;
+    unordered_map<int, int> index_map_;
+};
