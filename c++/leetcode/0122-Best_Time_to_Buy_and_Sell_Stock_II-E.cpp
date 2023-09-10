@@ -19,3 +19,19 @@ public:
         return profit;
     }
 };
+
+// 2023/09/10
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int max_hold = INT_MIN;
+        int max_nohold = 0;
+        for (int p : prices) {
+            int nex_max_hold = std::max(max_nohold - p, max_hold);
+            int nex_max_nohold = std::max(max_hold + p, max_nohold);
+            max_hold = nex_max_hold;
+            max_nohold = nex_max_nohold;
+        }
+        return max_nohold;
+    }
+};
