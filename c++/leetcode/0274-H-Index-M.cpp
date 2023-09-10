@@ -23,3 +23,19 @@ public:
         return 0;
     }
 };
+
+// 2023/09/10
+class Solution {
+public:
+    int hIndex(vector<int>& citations) {
+        sort(citations.begin(), citations.end());
+        const int n = citations.size();
+        for (int h = n; h > 0; --h) {
+            int i = n - h;
+            if (citations[i] >= h) {
+                return h;
+            }
+        }
+        return 0;
+    }
+};
