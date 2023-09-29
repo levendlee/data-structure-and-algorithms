@@ -31,3 +31,34 @@ public:
         return res;
     }
 };
+
+// 2023/09/28
+
+class Solution {
+public:
+    vector<vector<int>> threeSum(vector<int>& nums) {
+        std::sort(nums.begin(), nums.end());
+        vector<vector<int>> combos;
+        const int n = nums.size();
+
+        int i = 0, j, k;
+        while (i < n - 2) {
+            j = i + 1;
+            k = n - 1;
+            while (j < k) {
+                const int two_sum = nums[j] + nums[k];
+                if (two_sum == -nums[i]) {
+                    combos.push_back({nums[i], nums[j], nums[k]});
+                }
+                if (two_sum <= -nums[i]) {
+                    while ((j + 1 <= k) && (nums[j] == nums[++j]));
+                }
+                if (two_sum >= -nums[i]) {
+                    while ((k - 1 >= j) && (nums[k] == nums[--k]));
+                }
+            }
+            while ((i < n - 2) && (nums[i] == nums[++i]));
+        }
+        return combos;
+    }
+};

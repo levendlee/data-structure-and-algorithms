@@ -22,3 +22,23 @@ public:
         return max_area;
     }
 };
+
+// 2023/09/28
+
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        int max_area = 0;
+        const int n = height.size();
+        int i = 0, j = n - 1;
+        while (i < j) {
+            max_area = std::max(max_area, (j - i) * std::min(height[i], height[j]));
+            if (height[i] > height[j]) {
+                --j;
+            } else {
+                ++i;
+            }
+        }
+        return max_area;
+    }
+};
