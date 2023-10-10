@@ -35,3 +35,72 @@ public:
         return res;
     }
 };
+
+// 2023/10/04
+
+struct TrieNode {
+    int cnt;
+    std::unique_ptr<TrieNode> next[26];
+
+    TrieNode* getChild(char c) {
+        return next[c - 'a'].get();
+    }
+
+    TrieNode* getOrCreateChild(char c) {
+        if (!next[c - 'a']) {
+            next[c - 'a'] = std::make_unique<TrieNode>();
+        }
+        return next[c - 'a'].get();
+    }
+
+
+};
+
+class Solution {
+public:
+    vector<int> findSubstring(string s, vector<string>& words) {
+        TrieNode root;
+
+        int total_size = 0;
+        for (const auto& w : words) {
+            total_size += w.size();
+
+            TrieNode* cur = &root;
+            for (const auto& c : w) {
+                cur = cur->getOrCreateChild(c);
+            }
+            cur->cnt += 1;
+        }
+
+        std::function<bool(TrieNode* node, int idx, int unmatched_size)> dfs;
+        dfs = [&](TrieNode* node, int idx, int unmatched_size) {
+            if (idx == s.size()) {
+                return false;
+            }
+            node = node->getChild(s[idx]);
+            if (!node) {
+                return false;
+            }
+            if (node->cnt > 0) {
+                if (unmatched_size == 0) {
+                    return true;
+                }
+                node->cnt -= 1;
+                bool matched = dfs(&root, idx + 1, unmatched_size - 1);
+                node->cnt += 1;
+                if (matched) {
+                    return true;
+                }
+            }
+            return dfs(node, idx + 1, unmatched_size - 1);
+        };
+
+        vector<int> res;
+        for (int i = 0; i < s.size(); ++i) {
+            if (dfs(&root, i, total_size - 1)) {
+                res.push_back(i);
+            }
+        }
+        return res;
+    }
+};

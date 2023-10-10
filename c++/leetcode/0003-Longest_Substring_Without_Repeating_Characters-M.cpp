@@ -22,3 +22,25 @@ public:
         return len;
     }
 };
+
+// 2023/10/03
+
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        const int n = s.size();
+        vector<bool> char_set(256, false);
+        int i = 0, j = 0;
+        int max_len = 0;
+        while (j < n) {
+            while (char_set[s[j]]) {
+                char_set[s[i]] = false;
+                ++i;
+            };
+            char_set[s[j]] = true;
+            max_len = std::max(max_len, j - i + 1);
+            ++j;
+        }
+        return max_len;
+    }
+};
