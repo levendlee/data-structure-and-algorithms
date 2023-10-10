@@ -20,3 +20,29 @@ public:
         return res;
     }
 };
+
+// 2023/10/09
+
+class Solution {
+public:
+    vector<vector<int>> merge(vector<vector<int>>& intervals) {
+        std::sort(intervals.begin(), intervals.end());
+        std::vector<std::vector<int>> res;
+        if (intervals.empty()) {
+            return res;
+        }
+        int start = intervals[0][0], end = intervals[0][1];
+        for (int i = 1; i < intervals.size(); ++i) {
+            const auto& interval = intervals[i];
+            if (end < interval[0]) {
+                res.push_back({start, end});
+                start = interval[0];
+                end = interval[1];
+            } else {
+                end = std::max(end, interval[1]);
+            }
+        }
+        res.push_back({start, end});
+        return res;
+    }
+};

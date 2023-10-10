@@ -29,3 +29,32 @@ public:
         return res;
     }
 };
+
+// 2023/10/09
+
+class Solution {
+public:
+    vector<vector<int>> insert(vector<vector<int>>& intervals, vector<int>& newInterval) {
+        vector<vector<int>> res;
+        int start = newInterval[0], end = newInterval[1];
+        bool inserted = false;
+        for (const auto it : intervals) {
+            if (it[1] < start) {
+                res.push_back(it);
+            } else if (it[0] > end) {
+                if (!inserted) {
+                    res.push_back({start, end});
+                    inserted = true;
+                }
+                res.push_back(it);
+            } else {
+                start = std::min(start, it[0]);
+                end = std::max(end, it[1]);
+            }
+        }
+        if (!inserted) {
+            res.push_back({start, end});
+        }
+        return res;
+    }
+};

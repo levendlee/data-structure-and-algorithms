@@ -30,3 +30,45 @@ public:
         return res.empty() ? "/" : res;
     }
 };
+
+// 2023/10/09
+class Solution {
+public:
+    string simplifyPath(string path) {
+        std::stack<string> stk;
+        const int n = path.size();
+        int i = 0;
+        while (i < n) {
+            while (i < n && path[i] == '/') {
+                ++i;
+            }
+
+            int cnt = 0;
+            int dot_cnt = 0;
+            while (i < n && path[i] != '/') {
+                ++cnt;
+                dot_cnt += path[i] == '.';
+                ++i;
+            }
+            if (cnt == 1 && dot_cnt == 1) {
+                continue;
+            } if (cnt == 2 && dot_cnt == 2) {
+                if (!stk.empty()) {
+                    stk.pop();
+                }
+            } else if (cnt > 0) {
+                stk.push(path.substr(i - cnt, cnt));
+            }
+        }
+        std::string res;
+        while (!stk.empty()) {
+            res.insert(0, stk.top());
+            res.insert(0, "/");
+            stk.pop();
+        }
+        if (res.empty()) {
+            return "/";
+        }
+        return res;
+    }
+};
