@@ -26,3 +26,35 @@ public:
         return nums.top();
     }
 };
+
+// 2023/10/18
+
+class Solution {
+public:
+    int evalRPN(vector<string>& tokens) {
+        std::stack<int> stk;
+        for (const auto& t : tokens) {
+            if (t == "+" || t == "-" || t == "*" || t == "/") {
+                int rhs = stk.top();
+                stk.pop();
+                int lhs = stk.top();
+                stk.pop();
+                int res;
+                if (t == "+") {
+                    res = lhs + rhs;
+                } else if (t == "-") {
+                    res = lhs - rhs;
+                } else if (t == "*") {
+                    res = lhs * rhs;
+                } else {
+                    res = lhs / rhs;
+                }
+                stk.push(res);
+            } else {
+                stk.push(std::atoi(t.c_str()));
+            }
+        }
+
+        return stk.top();
+    }
+};

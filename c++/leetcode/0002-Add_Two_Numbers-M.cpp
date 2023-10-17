@@ -30,3 +30,43 @@ public:
         return preHead->next;
     }
 };
+
+// 2023/10/18
+
+class Solution {
+public:
+    ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode* root = new ListNode(0);
+
+        ListNode* pre = nullptr;
+        ListNode* cur = root;
+        int inc = 0;
+        while (inc || l1 || l2) {
+            int lhs;
+            if (!l1) {
+                lhs = 0;
+            } else {
+                lhs = l1->val;
+                l1 = l1->next;
+            }
+            int rhs;
+            if (!l2) {
+                rhs = 0;
+            } else {
+                rhs = l2->val;
+                l2 = l2->next;
+            }
+            int sum = lhs + rhs + inc;
+            cur->val = sum % 10;
+            cur->next = new ListNode(0);
+            pre = cur;
+            cur = cur->next;
+            inc = sum / 10;
+        }
+        if (cur != root && cur->val == 0) {
+            pre->next = nullptr;
+            delete cur;
+        }
+        return root;
+    }
+};
