@@ -44,3 +44,52 @@ public:
         }
     }
 };
+
+
+// 2023/10/31
+
+struct CacheEntry {
+    int key;
+    int value;
+};
+
+class LRUCache {
+public:
+    LRUCache(int capacity) {
+        capacity_ = capacity;
+    }
+
+    int get(int key) {
+        auto iter = key_to_node_.find(key);
+        if (iter == key_to_node_.end()) {
+            return -1;
+        }
+        int value = iter->second->value;
+        put(key, value);
+        return value;
+    }
+
+    void put(int key, int value) {
+        auto hash_iter = key_to_node_.find(key);
+        std::list<CacheEntry>::iterator list_iterator;
+
+        if (hash_iter != key_to_node_.end()) {
+            list_iterator = hash_iter->second;
+            list_.erase(list_iterator);
+        }
+        CacheEntry entry{key, value};
+        list_iterator = list_.insert(list_.begin(), entry);
+        key_to_node_[key] = list_iterator;
+
+        if (list_.size() > capacity_) {
+            key_to_node_.erase(list_.back().key);
+            list_.pop_back();
+        }
+    }
+
+private:
+    int capacity_;
+    std::unordered_map<int, std::list<CacheEntry>::iterator> key_to_node_;
+    std::list<CacheEntry> list_;
+};
+

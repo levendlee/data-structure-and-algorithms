@@ -43,3 +43,26 @@ public:
     }
 };
 
+// 2023/10/21
+class Solution {
+public:
+    Node* copyRandomList(Node* head) {
+        if (!head) {
+            return nullptr;
+        }
+        unordered_map<Node*, Node*> originals_to_copies;
+        Node* cur = head;
+        while (cur) {
+            originals_to_copies[cur] = new Node(cur->val);
+            cur = cur->next;
+        }
+        cur = head;
+        while (cur) {
+            Node* copy = originals_to_copies[cur];
+            copy->next = originals_to_copies[cur->next];
+            copy->random = originals_to_copies[cur->random];
+            cur = cur->next;
+        }
+        return originals_to_copies[head];
+    }
+};

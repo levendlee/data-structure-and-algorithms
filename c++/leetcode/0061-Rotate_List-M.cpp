@@ -41,3 +41,38 @@ public:
         return cur_head;
     }
 };
+
+// 2023/10/21
+class Solution {
+public:
+    ListNode* rotateRight(ListNode* head, int k) {
+        if (k == 0 || !head) {
+            return head;
+        }
+
+        int size = 0;
+        ListNode* pre_head = new ListNode(0, head);
+        ListNode* pre = pre_head, *cur = head, *tail = head;
+        while (cur) {
+            pre = cur;
+            cur = cur->next;
+            ++size;
+        }
+        tail = pre;
+
+        k = size - k % size;
+        if (size == 1 || k == 0 || k == size) {
+            return head;
+        }
+
+        cur = head;
+        while (--k) {
+            cur = cur->next;
+        }
+        pre_head->next = cur->next;
+        cur->next = nullptr;
+        tail->next = head;
+
+        return pre_head->next;
+    }
+};
