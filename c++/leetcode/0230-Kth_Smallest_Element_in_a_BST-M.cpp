@@ -37,3 +37,30 @@ public:
         return kth_;
     }
 };
+
+// 2023/10/21
+
+class Solution {
+public:
+    int kthSmallest(TreeNode* root, int k) {
+        stack<TreeNode*> stk;
+        while (root) {
+            stk.push(root);
+            root = root->left;
+        }
+
+        for (int i = 0; i < k - 1; ++i) {
+            TreeNode* node = stk.top();
+            stk.pop();
+            if (node->right) {
+                node = node->right;
+                while (node) {
+                    stk.push(node);
+                    node = node->left;
+                }
+            }
+        }
+
+        return stk.top()->val;
+    }
+};

@@ -25,3 +25,29 @@ public:
         return preOrder(root, 0);
     }
 };
+
+// 2023/10/21
+
+class Solution {
+public:
+    int sumNumbers(TreeNode* root) {
+        int sum = 0;
+
+        function<void(TreeNode*, int)> preorder;
+        preorder = [&](TreeNode* root, int val) {
+            val = val * 10 + root->val;
+            if (!root->left && !root->right) {
+                sum += val;
+            } 
+            if (root->left) {
+                preorder(root->left, val);
+            }
+            if (root->right) {
+                preorder(root->right, val);
+            }
+        };
+        preorder(root, 0);
+
+        return sum;
+    }
+};

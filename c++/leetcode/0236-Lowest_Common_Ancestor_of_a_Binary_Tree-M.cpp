@@ -35,3 +35,33 @@ public:
         return lca_;
     }
 };
+
+// 2023/10/21
+class Solution {
+public:
+    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+        if (p == q) return p;
+
+        TreeNode* lca = nullptr;
+        function<int(TreeNode*)> preorder;
+        preorder = [&](TreeNode* node) {
+            if (!node) return 0;
+            int mask = 0;
+            if (node == p) {
+                mask |= 1;
+            }
+            if (node == q) {
+                mask |= 2;
+            }
+            mask |= preorder(node->left);
+            mask |= preorder(node->right);
+            if (!lca && mask == 3) {
+                lca = node;
+            }
+            return mask;
+        };
+        preorder(root);
+
+        return lca;
+    }
+};

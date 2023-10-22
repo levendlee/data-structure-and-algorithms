@@ -40,3 +40,22 @@ public:
         return isValidBSTHelper(root).success;
     }
 };
+
+
+// 2023/10/21
+class Solution {
+public:
+    bool isValidBST(TreeNode* root) {
+        function<bool(TreeNode*, long long, long long)> traverse;
+
+        traverse = [&](TreeNode* node, long long min_val, long long max_val) {
+            if (!node) return true;
+            if (node->val < min_val || node->val > max_val) return false;
+            if (!traverse(node->left, min_val, node->val - 1LL)) return false;
+            if (!traverse(node->right, node->val + 1LL, max_val)) return false;
+            return true;
+        };
+
+        return traverse(root, INT_MIN, INT_MAX);
+    }
+};
