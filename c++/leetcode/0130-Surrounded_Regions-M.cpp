@@ -52,3 +52,60 @@ public:
         }
     }
 };
+
+// 2023/10/21
+class Solution {
+public:
+    void solve(vector<vector<char>>& board) {
+        const int m = board.size();
+        const int n = board[0].size();
+
+        std::vector<int> uf(m * n, 0);
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                uf[i * n + j] = i * n + j;
+            }
+        }
+
+        std::function<int(int)> find_f;
+        find_f = [&](int a) {
+            if (uf[a] == a) return a;
+            return uf[a] = find_f(uf[uf[a]]);
+        };
+
+        std::function<int(int, int)> union_f;
+        union_f = [&](int a, int b) {
+            int pa = find_f(a);
+            int pb = find_f(b);
+            return uf[pa] = pb;
+        };
+
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (board[i][j] == 'X') continue;
+                if (i + 1 < m && board[i + 1][j] == 'O') union_f((i + 1) * n + j, i * n + j);
+                if (i - 1 >= 0 && board[i - 1][j] == 'O') union_f((i - 1) * n + j, i * n + j);
+                if (j + 1 < n && board[i][j + 1] == 'O') union_f(i * n + j, i * n + j + 1);
+                if (j - 1 >= 0 && board[i][j - 1] == 'O') union_f(i * n + j, i * n + j - 1);
+            }
+        }
+
+        std::unordered_set<int> cannot_flip_sets;
+        for (int i = 0; i < m; ++i) {
+            cannot_flip_sets.insert(find_f(i * n + 0));
+            cannot_flip_sets.insert(find_f(i * n + n - 1));
+        }
+        for (int j = 0; j < n; ++j) {
+            cannot_flip_sets.insert(find_f(0 * n + j));
+            cannot_flip_sets.insert(find_f((m-1) * n + j));
+        }
+
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (board[i][j] == 'O' && !cannot_flip_sets.count(find_f(i * n + j))) {
+                    board[i][j] = 'X';
+                }
+            }
+        }
+    }
+};

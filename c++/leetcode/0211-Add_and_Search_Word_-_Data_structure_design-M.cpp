@@ -67,3 +67,111 @@ public:
  * obj->addWord(word);
  * bool param_2 = obj->search(word);
  */
+
+ // 2023/10/23
+
+ struct Node {
+    bool has_word;
+    Node* children[26];
+
+    Node() : has_word(false) {
+        std::fill(children, children + 26, nullptr);
+    }
+};
+
+class WordDictionary {
+public:
+    WordDictionary() {
+        root_ = new Node();
+    }
+
+    void addWord(string word) {
+        Node* node = root_;
+
+        for (char c : word) {
+            int idx = c - 'a';
+            if (!node->children[idx]) {
+                node->children[idx] = new Node();
+            }
+            node = node->children[idx];
+        }
+        node->has_word = true;
+    }
+
+    bool search(string word) {
+        // bfs
+        /*
+        queue<Node*> q;
+        q.push(root_);
+
+        for (char c : word) {
+            int num_paths = q.size();
+            if (num_paths == 0) {
+                return false;
+            }
+
+            for (int p = 0; p < num_paths; ++p) {
+                Node* node = q.front();
+                q.pop();
+
+                if (c == '.') {
+                    for (int i = 0; i < 26; ++i) {
+                        if (node->children[i]) {
+                            q.push(node->children[i]);
+                        }
+                    }
+                } else {
+                    if (node->children[c - 'a']) {
+                        q.push(node->children[c - 'a']);
+                    }
+                }
+            }
+        }
+
+        while (!q.empty()) {
+            Node* node = q.front();
+            q.pop();
+
+            if (node->has_word) {
+                return true;
+            }
+        }
+        return false;
+        */
+
+        function<bool(Node*, int)> dfs;
+        dfs = [&](Node* node, int word_idx) {
+            if (!node) {
+                return false;
+            }
+            if (word_idx == word.size()) {
+                return node->has_word;
+            }
+
+            char c = word[word_idx];
+            if (c == '.') {
+                for (int node_idx = 0; node_idx < 26; ++node_idx) {
+                    if (dfs(node->children[node_idx], word_idx + 1)) {
+                        return true;
+                    }
+                }
+                return false;
+            } else {
+                int node_idx = word[word_idx] - 'a';
+                return dfs(node->children[node_idx], word_idx + 1);
+            }
+        };
+
+        return dfs(root_, 0);
+    }
+
+private:
+    Node* root_;
+};
+
+/**
+ * Your WordDictionary object will be instantiated and called as such:
+ * WordDictionary* obj = new WordDictionary();
+ * obj->addWord(word);
+ * bool param_2 = obj->search(word);
+ */

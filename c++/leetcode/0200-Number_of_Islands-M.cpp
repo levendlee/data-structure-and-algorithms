@@ -39,3 +39,38 @@ public:
         return cnt;
     }
 };
+
+// 2023/10/21
+
+class Solution {
+public:
+    int numIslands(vector<vector<char>>& grid) {
+        const int m = grid.size();
+        if (m == 0) return 0;
+        const int n = grid[0].size();
+        if (n == 0) return 0;
+
+        int num_islands = 0;
+        std::function<void(int, int)> dfs;
+        dfs = [&](int i, int j) {
+            if (i < 0 || i >= m || j < 0 || j >= n || grid[i][j] != '1') {
+                return;
+            }
+            grid[i][j] = '0';
+            dfs(i + 1, j);
+            dfs(i - 1, j);
+            dfs(i, j + 1);
+            dfs(i, j - 1);
+        };
+
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (grid[i][j] != '1') continue;
+                ++num_islands;
+                dfs(i, j);
+            }
+        }
+
+        return num_islands;
+    }
+};

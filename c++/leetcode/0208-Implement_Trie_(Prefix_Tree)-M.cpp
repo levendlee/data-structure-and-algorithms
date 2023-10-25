@@ -59,3 +59,72 @@ public:
         return true;
     }
 };
+
+// 2923/10/23
+
+class Trie {
+public:
+    Trie() {
+        root_ = new Node();
+    }
+
+    void insert(string word) {
+        Node* node = root_;
+        for (char c : word) {
+            node = node->GetOrCreateChild(c);
+        }
+        node->has_word = true;
+    }
+
+    bool search(string word) {
+        Node* node = root_;
+        for (char c : word) {
+            node = node->children[c - 'a'];
+            if (!node) {
+                return false;
+            }
+        }
+        return node->has_word;
+    }
+
+    bool startsWith(string prefix) {
+        Node* node = root_;
+        for (char c : prefix) {
+            node = node->children[c - 'a'];
+            if (!node) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+private:
+    struct Node {
+        bool has_word;
+        Node* children[26];
+
+        Node() : has_word(false) {
+            for (int i = 0; i < 26; ++i) {
+                children[i] = nullptr;
+            }
+        }
+
+        Node* GetOrCreateChild(char c) {
+            int idx = c - 'a';
+            if (!children[idx]) {
+                children[idx] = new Node();
+            }
+            return children[idx];
+        }
+    };
+
+    Node* root_;
+};
+
+/**
+ * Your Trie object will be instantiated and called as such:
+ * Trie* obj = new Trie();
+ * obj->insert(word);
+ * bool param_2 = obj->search(word);
+ * bool param_3 = obj->startsWith(prefix);
+ */
