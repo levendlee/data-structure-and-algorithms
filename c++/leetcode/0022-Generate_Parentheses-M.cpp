@@ -31,3 +31,40 @@ public:
         return res;
     }
 };
+
+// 2023/10/23
+
+class Solution {
+public:
+    vector<string> generateParenthesis(int n) {
+        vector<string> results;
+
+        function<void(string&, int)> backtracing;
+        backtracing = [&](string& s, int added_left) {
+            if (s.size() == 2 * n) {
+                results.push_back(s);
+                return;
+            }
+
+            int added_right = s.size() - added_left;
+            int remaining_left = n - added_left;
+            int remaining_right = n - added_right;
+
+            if (remaining_left > 0) {
+                s.push_back('(');
+                backtracing(s, added_left + 1);
+                s.pop_back();
+            }
+
+            if (added_left > added_right) {
+                s.push_back(')');
+                backtracing(s, added_left);
+                s.pop_back();
+            }
+        };
+
+        string s;
+        backtracing(s, 0);
+        return results;
+    }
+};

@@ -23,3 +23,34 @@ public:
         return tmp;
     }
 };
+
+
+// 2023/10/23
+
+class Solution {
+public:
+    vector<string> letterCombinations(string digits) {
+        if (digits.empty()) {
+            return {};
+        }
+
+        const string table[] = {"abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
+
+        vector<string> results;
+        function<void(int, string&)> dfs;
+        dfs = [&](int i, string& s) {
+            if (i == digits.size()) {
+                results.push_back(s);
+                return;
+            }
+            for (char c : table[digits[i] - '2']) {
+                s.push_back(c);
+                dfs(i + 1, s);
+                s.pop_back();
+            }
+        };
+        string s = "";
+        dfs(0, s);
+        return results;
+    }
+};

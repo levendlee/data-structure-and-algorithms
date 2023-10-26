@@ -27,3 +27,35 @@ public:
         return res;
     }
 };
+
+// 2023/10/23
+
+class Solution {
+public:
+    vector<vector<int>> permute(vector<int>& nums) {
+        const int n = nums.size();
+
+        vector<bool> used(n, false);
+        vector<vector<int>> results;
+        vector<int> perm;
+
+        function<void()> dfs;
+        dfs = [&]() {
+            if (perm.size() == n) {
+                results.push_back(perm);
+            }
+            for (int i = 0; i < n; ++i) {
+                if (!used[i]) {
+                    used[i] = true;
+                    perm.push_back(nums[i]);
+                    dfs();
+                    perm.pop_back();
+                    used[i] = false;
+                }
+            }
+        };
+        dfs();
+
+        return results;
+    }
+};

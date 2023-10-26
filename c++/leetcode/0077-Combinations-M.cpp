@@ -31,3 +31,27 @@ public:
         return res;
     }
 };
+
+// 2023/10/23
+class Solution {
+public:
+    vector<vector<int>> combine(int n, int k) {
+        vector<vector<int>> results;
+
+        function<void(int i, vector<int>&)> dfs;
+        dfs = [&](int i, vector<int>& vec) {
+            if (vec.size() == k) {
+                results.push_back(vec);
+                return;
+            }
+            for (int num = i; num <= n; ++num) {
+                vec.push_back(num);
+                dfs(num + 1, vec);
+                vec.pop_back();
+            }
+        };
+        vector<int> vec;
+        dfs(1, vec);
+        return results;
+    }
+};

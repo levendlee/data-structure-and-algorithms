@@ -27,3 +27,37 @@ public:
         return res;
     }
 };
+
+// 2023/10/23
+
+class Solution {
+public:
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<vector<int>> results;
+
+        sort(candidates.begin(), candidates.end());
+        function<void(int, int, vector<int>&)> backtracing;
+        backtracing = [&](int total, int idx, vector<int>& nums) {
+            if (total == target) {
+                results.push_back(nums);
+                return;
+            } else if (total > target) {
+                return;
+            }
+
+            for (int i = idx; i < candidates.size(); ++i) {
+                int n = candidates[i];
+                if (total + n > target) break;
+                total += n;
+                nums.push_back(n);
+                backtracing(total, i, nums);
+                total -= n;
+                nums.pop_back();
+            }
+        };
+        vector<int> nums;
+        backtracing(0, 0, nums);
+
+        return results;
+    }
+};

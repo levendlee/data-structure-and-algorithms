@@ -32,3 +32,40 @@ public:
         return false;
     }
 };
+
+// 2023/10/23
+class Solution {
+public:
+    bool exist(vector<vector<char>>& board, string word) {
+        const int m = board.size();
+        const int n = board[0].size();
+
+        function<bool(int, int, int)> dfs;
+        dfs = [&](int match, int i, int j) {
+            if (match == word.size()) return true;
+            if (i < 0 || i >= m || j < 0 || j >= n) return false;
+            if (board[i][j] != word[match]) return false;
+
+            char temp = '#';
+            swap(board[i][j], temp);
+            if (dfs(match + 1, i + 1, j) ||
+                dfs(match + 1, i - 1, j) ||
+                dfs(match + 1, i, j + 1) ||
+                dfs(match + 1, i, j - 1)) {
+                return true;
+            }
+            swap(board[i][j], temp);
+
+            return false;
+        };
+
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (dfs(0, i, j)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+};
