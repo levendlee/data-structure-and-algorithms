@@ -97,3 +97,35 @@ public:
         return mergeList(lists, 0, lists.size() - 1);
     }
 };
+
+// 2023/10/23
+
+class Solution {
+public:
+    ListNode* mergeKLists(vector<ListNode*>& lists) {
+        ListNode* merged_list_prehead = new ListNode();
+        ListNode* merged_list = merged_list_prehead;
+
+        const int k = lists.size();
+        priority_queue<pair<int, int>> pq;
+        for (int i = 0; i < k; ++i) {
+            if (lists[i]) {
+                pq.push({-lists[i]->val, i});
+            }
+        }
+
+        while (!pq.empty()) {
+            auto index = pq.top().second;
+            pq.pop();
+            merged_list->next = lists[index];
+            merged_list = merged_list->next;
+            lists[index] = lists[index]->next;
+            if (lists[index]) {
+                pq.push({-lists[index]->val, index});
+            }
+        }
+
+        return merged_list_prehead->next;
+
+    }
+};
