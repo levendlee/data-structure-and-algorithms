@@ -18,3 +18,24 @@ public:
         return std::min(nums[0], nums[lo]);
     }
 };
+
+// 2023/10/28
+
+class Solution {
+public:
+    int findMin(vector<int>& nums) {
+        const int n = nums.size();
+        if (nums.size() == 1 || nums[0] < nums[n - 1]) return nums[0];
+
+        int lo = 1, hi = n - 1;
+        while (lo < hi) {
+            int mid = (lo + hi) / 2;
+            if (nums[0] < nums[mid]) {
+                lo = mid + 1;
+            } else {
+                hi = mid;
+            }
+        }
+        return nums[lo];
+    }
+};

@@ -39,3 +39,37 @@ public:
         return {start, end};
     }
 };
+
+
+// 2023/10/28
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        const int n = nums.size();
+        if (nums.empty()) return {-1, -1};
+
+        int lo = 0, hi = n - 1;
+        while (lo < hi) {
+            int mid = (lo + hi) / 2;
+            if (nums[mid] < target) {
+                lo = mid + 1;
+            } else {
+                hi = mid;
+            }
+        }
+        if (nums[lo] != target) return {-1, -1};
+
+        int start = lo;
+        lo = start, hi = n - 1;
+        while (lo < hi) {
+            int mid = (lo + hi + 1) / 2;
+            if (nums[mid] > target) {
+                hi = mid - 1;
+            } else {
+                lo = mid;
+            }
+        }
+        int end = lo;
+        return {start, end};
+    }
+};

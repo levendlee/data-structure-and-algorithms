@@ -23,3 +23,40 @@ public:
         return -1;
     }
 };
+
+class Solution {
+public:
+    int search(vector<int>& nums, int target) {
+        const int n = nums.size();
+
+        int start = 0;
+        if (nums[0] < nums[n - 1]) {
+            start = 0;
+        } else {
+            int lo = 1, hi = n - 1;
+            while (lo < hi) {
+                int mid = (lo + hi) / 2;
+                if (nums[0] < nums[mid]) {
+                    lo = mid + 1;
+                } else {
+                    hi = mid;
+                }
+            }
+            start = lo;
+        }
+
+        int lo = 0, hi = n - 1;
+        while (lo <= hi) {
+            int mid = (lo + hi) / 2;
+            int idx = (mid + start) % n;
+            if (nums[idx] == target) {
+                return idx;
+            } else if (nums[idx] > target) {
+                hi = mid - 1;
+            } else {
+                lo = mid + 1;
+            }
+        }
+        return -1;
+    }
+};
