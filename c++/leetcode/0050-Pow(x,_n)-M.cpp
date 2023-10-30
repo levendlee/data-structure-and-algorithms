@@ -21,3 +21,24 @@ public:
         return neg ? 1.0 / res : res;
     }
 };
+
+// 2023/10/23
+
+class Solution {
+public:
+    double myPow(double x, int n) {
+        bool inv = n < 0;
+
+        n = abs(n);
+        double pow = 1.0;
+        double pow2 = x;
+        for (int i = 0; i < 32; ++i) {
+            if ((n >> i) & 0x1) {
+                pow *= pow2;
+            }
+            pow2 *= pow2;
+        }
+
+        return inv ? 1.0 / pow : pow;
+    }
+};

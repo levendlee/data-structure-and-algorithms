@@ -39,3 +39,36 @@ public:
         }
     }
 };
+
+// 2023/10/29
+
+class MedianFinder {
+public:
+    MedianFinder() {
+
+    }
+
+    void addNum(int num) {
+        right_.push(-num);
+        left_.push(-right_.top());
+        right_.pop();
+
+        if (left_.size() > right_.size() + 1) {
+            right_.push(-left_.top());
+            left_.pop();
+        }
+    }
+
+    double findMedian() {
+        if (left_.size() == right_.size()) {
+            return (left_.top() - right_.top()) / 2.0;
+        }
+        return left_.top();
+    }
+
+private:
+    priority_queue<int> left_;
+    priority_queue<int> right_;
+
+};
+

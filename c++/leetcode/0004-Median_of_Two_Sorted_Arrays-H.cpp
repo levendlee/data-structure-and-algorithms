@@ -47,3 +47,52 @@ public:
         return 0;
     }
 };
+
+// 2023/10/29
+
+class Solution {
+public:
+    double findMedianSortedArrays(vector<int>& nums1, vector<int>& nums2) {
+        const int n1 = nums1.size(), n2 = nums2.size();
+        if (n1 > n2) {
+            return findMedianSortedArrays(nums2, nums1);
+        }
+
+        const int half = (n1 + n2) / 2;
+        const bool odd = (n1 + n2) % 2;
+
+        int lo = 0, hi = n1;
+        while (lo <= hi) {
+            int mid = (lo + hi) / 2;
+            int idx1 = mid;
+            int idx2 = half - mid;
+            int l1 = INT_MIN, l2 = INT_MIN, r1 = INT_MAX, r2 = INT_MAX;
+
+            if (idx1 > 0) {
+                l1 = nums1[idx1 - 1];
+            }
+            if (idx2 > 0) {
+                l2 = nums2[idx2 - 1];
+            }
+            if (idx1 < n1) {
+                r1 = nums1[idx1];
+            }
+            if (idx2 < n2) {
+                r2 = nums2[idx2];
+            }
+            if (l1 <= r2 && l2 <= r1) {
+                if (odd) {
+                    return std::min(r1, r2);
+                } else {
+                    return (std::max(l1, l2) + std::min(r1, r2)) / 2.0;
+                }
+            } else if (l1 > r2) {
+                hi = mid - 1;
+            } else {
+                lo = mid + 1;
+            }
+        }
+
+        return 0.0;
+    }
+};

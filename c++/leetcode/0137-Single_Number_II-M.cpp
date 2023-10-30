@@ -20,3 +20,22 @@ public:
         return x0;
     }
 };
+
+// 2023/10/29
+
+class Solution {
+public:
+    int singleNumber(vector<int>& nums) {
+        int res = 0;
+
+        for (int bit = 0; bit < 32; ++bit) {
+            int sum = 0;
+            for (int n : nums) {
+                sum += (n >> bit) & 0x1;
+            }
+            res |= (sum % 3) << bit;
+        }
+
+        return res;
+    }
+};

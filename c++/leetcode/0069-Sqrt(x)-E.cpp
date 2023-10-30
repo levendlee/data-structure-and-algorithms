@@ -17,3 +17,21 @@ public:
         return lo;
     }
 };
+
+// 2023/10/29
+
+class Solution {
+public:
+    int mySqrt(int x) {
+        long long lo = 0, hi = x;
+        while (lo < hi) {
+            long long mid = (lo + hi + 1) / 2;
+            if (mid * mid > x) {
+                hi = mid - 1;
+            } else {
+                lo = mid;
+            }
+        }
+        return lo;
+    }
+};

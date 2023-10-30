@@ -29,3 +29,29 @@ public:
         return true;
     }
 };
+
+// 2023/10/29
+
+class Solution {
+public:
+    bool isPalindrome(int x) {
+        if (x < 0) return false;
+
+        long long hbase = 1;
+        while (x / hbase) {
+            hbase *= 10;
+        }
+        hbase /= 10;
+
+        long long lbase = 1;
+        while (hbase > lbase) {
+            if (((x / hbase) % 10) != ((x / lbase) % 10)) {
+                return false;
+            }
+            hbase /= 10;
+            lbase *= 10;
+        }
+
+        return true;
+    }
+};

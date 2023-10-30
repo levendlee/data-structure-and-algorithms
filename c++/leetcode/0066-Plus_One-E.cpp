@@ -19,3 +19,25 @@ public:
         return digits;
     }
 };
+
+// 2023/10/29
+
+class Solution {
+public:
+    vector<int> plusOne(vector<int>& digits) {
+        reverse(digits.begin(), digits.end());
+
+        int carry = 1;
+        for (int& d : digits) {
+            int sum = d + carry;
+            d = sum % 10;
+            carry = sum / 10;
+        }
+        if (carry) {
+            digits.push_back(carry);
+        }
+
+        reverse(digits.begin(), digits.end());
+        return digits;
+    }
+};

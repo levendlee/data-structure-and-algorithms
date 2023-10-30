@@ -23,3 +23,28 @@ public:
         return res;
     }
 };
+
+// 2023/10/29
+
+class Solution {
+public:
+    string addBinary(string a, string b) {
+        const int na = a.size(), nb = b.size();
+
+        string res;
+        int ia = na - 1, ib = nb - 1, carry = 0;
+        while (ia >= 0 || ib >= 0) {
+            int ca = ia >= 0 ? a[ia] - '0' : 0;
+            int cb = ib >= 0 ? b[ib] - '0' : 0;
+            int cr = ca + cb + carry;
+            res.push_back((cr % 2) + '0');
+            carry = cr / 2;
+            --ia; --ib;
+        }
+        if (carry != 0) {
+            res.push_back(carry + '0');
+        }
+        reverse(res.begin(), res.end());
+        return res;
+    }
+};
