@@ -59,3 +59,34 @@ public:
         return false;
     }
 };
+
+// 2023/10/30
+
+class Solution {
+public:
+    bool wordBreak(string s, vector<string>& wordDict) {
+        unordered_set<string> word_set;
+        unordered_set<int> word_size_set;
+        for (const auto& s : wordDict) {
+            word_set.insert(s);
+            word_size_set.insert(s.size());
+        }
+
+        const int n = s.size();
+        vector<bool> split(n + 1, false);
+        split[0] = true;
+        for (int i = 0; i < n; ++i) {
+            if (!split[i]) {
+                continue;
+            }
+            for (int size : word_size_set) {
+                int j = i + size;
+                if (j <= n && word_set.count(s.substr(i, size))) {
+                    split[j] = true;
+                }
+            }
+        }
+
+        return split[n];
+    }
+};

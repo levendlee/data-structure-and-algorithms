@@ -30,3 +30,24 @@ public:
         return maxl * maxl;
     }
 };
+
+// 2023/11/02
+
+class Solution {
+public:
+    int maximalSquare(vector<vector<char>>& matrix) {
+        const int m = matrix.size();
+        const int n = matrix[0].size();
+
+        vector<vector<int>> dp(m + 1, vector<int>(n + 1, 0));
+        int max_square = 0;
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (matrix[i][j] != '1') continue;
+                dp[i + 1][j + 1] = min({dp[i + 1][j], dp[i][j + 1], dp[i][j]}) + 1;
+                max_square = max(max_square, dp[i + 1][j + 1]);
+            }
+        }
+        return max_square * max_square;
+    }
+};

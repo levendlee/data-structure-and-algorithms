@@ -31,3 +31,25 @@ public:
         return dp[m][n];
     }
 };
+
+// 2023/11/02
+
+class Solution {
+public:
+    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+        const int m = obstacleGrid.size();
+        const int n = obstacleGrid[0].size();
+        vector<vector<int>> paths(m, vector<int>(n, 0));
+        paths[0][0] = obstacleGrid[0][0] != 1;
+
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (i == 0 && j == 0 || obstacleGrid[i][j] == 1) continue;
+                paths[i][j] = (i == 0 ? 0 : paths[i-1][j]) +
+                              (j == 0 ? 0 : paths[i][j-1]);
+            }
+        }
+
+        return paths[m-1][n-1];
+    }
+};

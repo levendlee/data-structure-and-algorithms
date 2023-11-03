@@ -14,3 +14,18 @@ public:
         return std::max(pre2, pre1);
     }
 };
+
+// 2023/10/30
+
+class Solution {
+public:
+    int rob(vector<int>& nums) {
+        int pre1 = 0, pre2 = 0, cur = 0;
+        for (int n : nums) {
+            cur = std::max(pre1, pre2 + n);
+            pre2 = pre1;
+            pre1 = cur;
+        }
+        return cur;
+    }
+};

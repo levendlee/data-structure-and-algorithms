@@ -18,3 +18,20 @@ public:
         return dp[amount] == INT_MAX ? -1 : dp[amount];
     }
 };
+
+// 2023/10/30
+class Solution {
+public:
+    int coinChange(vector<int>& coins, int amount) {
+        vector<int> min_num_coins(amount + 1, INT_MAX);
+        min_num_coins[0] = 0;
+        for (long long i = 0; i <= amount; ++i) {
+            if (min_num_coins[i] == INT_MAX) continue;
+            for (int c : coins) {
+                if (i + c > amount) continue;
+                min_num_coins[i + c] = std::min(min_num_coins[i + c], min_num_coins[i] + 1);
+            }
+        }
+        return min_num_coins[amount] == INT_MAX ? -1 : min_num_coins[amount];
+    }
+};
