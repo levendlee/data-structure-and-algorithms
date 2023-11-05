@@ -39,3 +39,43 @@ public:
         }
     }
 };
+
+// 2013/11/05
+
+class Solution {
+public:
+    void gameOfLife(vector<vector<int>>& board) {
+        const int m = board.size(), n = board[0].size();
+
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                int neighbors = 0;
+                for (int ii = max(i - 1, 0); ii <= min(i + 1, m - 1); ++ii) {
+                    for (int jj = max(j - 1, 0); jj <= min(j + 1, n - 1); ++jj) {
+                        if (ii == i && jj == j) continue;
+                        if (board[ii][jj] & 0x1) ++neighbors;
+                    }
+                }
+                if (board[i][j] & 0x1) {
+                    // live
+                    if (neighbors == 2 || neighbors == 3) {
+                        board[i][j] |= 1 << 1;
+                    }
+                } else {
+                    // die
+                    if (neighbors == 3) {
+                        board[i][j] |= 1 << 1;
+                    }
+                }
+            }
+        }
+
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                board[i][j] >>= 1;
+            }
+        }
+    }
+};
+
+

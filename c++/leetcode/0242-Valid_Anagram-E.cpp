@@ -16,3 +16,22 @@ public:
         return true;
     }
 };
+
+//
+
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        int s_cnt[256] = {0};
+        int t_cnt[256] = {0};
+
+        for (char c: s) {
+            ++s_cnt[c];
+        }
+        for (char c: t) {
+            ++t_cnt[c];
+        }
+
+        return equal(begin(s_cnt), end(s_cnt), begin(t_cnt));
+    }
+};

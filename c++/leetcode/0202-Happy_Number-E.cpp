@@ -24,3 +24,27 @@ public:
         return false;
     }
 };
+
+//
+
+class Solution {
+public:
+    bool isHappy(int n) {
+        unordered_set<int> visited;
+
+        int cur = n, nex = 0;
+        while (cur != 1) {
+            if (visited.count(cur)) break;
+            visited.insert(cur);
+
+            nex = 0;
+            while (cur) {
+                nex += (cur % 10) * (cur % 10);
+                cur /= 10;
+            }
+            cur = nex;
+        }
+
+        return cur == 1;
+    }
+};
