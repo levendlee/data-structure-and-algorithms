@@ -14,3 +14,18 @@ public:
         return max_profit;
     }
 };
+
+// 2023/11/04
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int max_profit = 0;
+        int lowest_price = INT_MAX;
+        for (int p : prices) {
+            max_profit = max(max_profit, p - lowest_price);
+            lowest_price = min(lowest_price, p);
+        }
+        return max_profit;
+    }
+};

@@ -78,3 +78,80 @@ public:
         return res;
     }
 };
+
+// 2023/11/04
+
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        string window;
+
+        unordered_map<char, int> t_char_count;
+        for (char c : t) {
+            t_char_count[c] += 1;
+        }
+
+        const int m = s.size();
+        const int n = t.size();
+
+        int i = 0, j = 0, valid = 0;
+        while (j < m) {
+            while (j < m && valid < n) {
+                auto iter = t_char_count.find(s[j]);
+                if (iter != t_char_count.end()) {
+                    valid += iter->second > 0;
+                    iter->second -= 1;
+                }
+                ++j;
+            }
+            if (valid != n) continue;
+            while (valid == n) {
+                auto iter = t_char_count.find(s[i]);
+                if (iter != t_char_count.end()) {
+                    iter->second += 1;
+                    valid -= iter->second > 0;
+                }
+                ++i;
+            }
+            if (window.empty() || window.size() > (j - i + 1)) {
+                window = s.substr(i - 1, j - i + 1);
+            }
+        }
+
+        return window;
+    }
+};
+
+class Solution {
+public:
+    string minWindow(string s, string t) {
+        string window;
+
+        const int m = s.size(), n = t.size();
+        int target[256] = {0};
+        int current[256] = {0};
+        int covered = 0;
+
+        for (char c : t) {
+            ++target[c];
+        }
+
+        int i = 0, j = 0;
+        while (j < m) {
+            if (++current[s[j]] <= target[s[j]]) {
+                ++covered;
+            }
+            if (covered == n) {
+                while (current[s[i]] > target[s[i]]) {
+                    --current[s[i++]];
+                };
+                if (window.empty() || window.size() > (j - i + 1)) {
+                    window = s.substr(i, j - i + 1);
+                }
+            }
+            ++j;
+        }
+
+        return window;
+    }
+};

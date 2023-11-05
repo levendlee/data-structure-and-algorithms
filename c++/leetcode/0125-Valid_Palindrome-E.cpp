@@ -18,3 +18,21 @@ public:
         return true;
     }
 };
+
+// 2023/11/04
+
+class Solution {
+public:
+    bool isPalindrome(string s) {
+        const int n = s.size();
+
+        int i = 0, j = n - 1;
+        while (i < j) {
+            while (i < j && !isalnum(s[i])) ++i;
+            while (i < j && !isalnum(s[j])) --j;
+            if (i < j && tolower(s[i++]) != tolower(s[j--])) return false;
+        }
+
+        return true;
+    }
+};

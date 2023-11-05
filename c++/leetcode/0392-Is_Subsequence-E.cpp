@@ -19,3 +19,23 @@ public:
         return i == m;
     }
 };
+
+
+// 2023/11/04
+class Solution {
+public:
+    bool isSubsequence(string s, string t) {
+        const int m = s.size(), n = t.size();
+
+        int i = 0, j = 0;
+        while (i < m && j < n) {
+            while (j < n && s[i] != t[j]) ++j;
+            if (j < n && s[i] == t[j]) {
+                ++i;
+                ++j;
+            }
+        }
+
+        return i == m;
+    }
+};

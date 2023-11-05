@@ -22,3 +22,19 @@ public:
         return major;
     }
 };
+
+
+// 2023/11/04
+
+class Solution {
+public:
+    int majorityElement(vector<int>& nums) {
+        int elem = 0;
+        int count = 0;
+        for (int n : nums) {
+            if (count == 0) elem = n;
+            count += elem == n ? 1 : -1;
+        }
+        return elem;
+    }
+};

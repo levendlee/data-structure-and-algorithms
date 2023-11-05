@@ -34,3 +34,56 @@ public:
         return spiral;
     }
 };
+
+// 2023/11/04
+class Solution {
+public:
+    vector<int> spiralOrder(vector<vector<int>>& matrix) {
+        vector<int> res;
+
+        const int m = matrix.size(), n = matrix[0].size();
+        int r_lo = 1, r_hi = m - 1, c_lo = 0, c_hi = n - 1;
+        int i = 0, j = 0;
+        int direction;
+        if (n > 1) {
+            direction = 0;
+        } else {
+            direction = 1;
+        }
+        while (res.size() < m * n) {
+            res.push_back(matrix[i][j]);
+
+            if (direction == 0) {
+                // right
+                j += 1;
+                if (j == c_hi) {
+                    --c_hi;
+                    direction = 1;
+                }
+            } else if (direction == 1) {
+                // down
+                i += 1;
+                if (i == r_hi) {
+                    --r_hi;
+                    direction = 2;
+                }
+            } else if (direction == 2) {
+                // left
+                j -= 1;
+                if (j == c_lo) {
+                    ++c_lo;
+                    direction = 3;
+                }
+            } else {
+                // up
+                i -= 1;
+                if (i == r_lo) {
+                    ++r_lo;
+                    direction = 0;
+                }
+            }
+        }
+
+        return res;
+    }
+};
