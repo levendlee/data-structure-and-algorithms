@@ -48,3 +48,55 @@ public:
         return res;
     }
 };
+
+// 2023/11/04
+
+class Solution {
+public:
+    vector<string> fullJustify(vector<string>& words, int maxWidth) {
+        vector<string> results;
+
+        const int n = words.size();
+        int i = 0, j = 0;
+        while (j < n) {
+            int width = 0;
+            int extend_width = 0;
+
+            i = j;
+            while (j < n && extend_width + words[j].size() <= maxWidth) {
+                width += words[j].size();
+                extend_width += words[j].size() + 1;
+                ++j;
+            }
+
+            int num_spaces = maxWidth - width;
+            int num_words = j - i;
+
+            string res;
+            if (num_words == 1) {
+                res = words[i] + string(num_spaces, ' ');
+            } else if (j == n) {
+                res += words[i++];
+                while (i < j) {
+                    res += ' ' + words[i++];
+                }
+                res += string(maxWidth - res.size(), ' ');
+            } else {
+                int offset = 0;
+                int each_spaces = num_spaces / (num_words - 1);
+                int left_spaces = num_spaces % (num_words - 1);
+                while (i < j) {
+                    res += words[i];
+                    if (++i != j) {
+                        res += string(each_spaces + (left_spaces-- > 0), ' ');
+                    }
+                }
+            }
+            std::cout << res << "\n";
+
+            results.push_back(res);
+        }
+
+        return results;
+    }
+};

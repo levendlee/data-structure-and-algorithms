@@ -20,3 +20,33 @@ public:
         return strs[0].substr(0, size);
     }
 };
+
+// 2023/11/04
+
+class Solution {
+public:
+    string longestCommonPrefix(vector<string>& strs) {
+        string prefix;
+        int idx = 0;
+
+        auto search = [&]() {
+            while (true) {
+                char c = ' ';
+                for (const auto& s : strs) {
+                    if (idx == s.size()) {
+                        return;
+                    }
+                    if (c != ' ' && s[idx] != c) {
+                        return;
+                    }
+                    c = s[idx];
+                }
+                prefix += c;
+                ++idx;
+            }
+        };
+
+        search();
+        return prefix;
+    }
+};

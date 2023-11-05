@@ -46,3 +46,22 @@ public:
         return -1;
     }
 };
+
+// 2023/11/04
+
+class Solution {
+public:
+    int strStr(string haystack, string needle) {
+        const int n = haystack.size();
+        const int k = needle.size();
+
+        for (int i = 0; i <= n - k; ++i) {
+            if (std::equal(needle.begin(), needle.end(), haystack.begin() + i)) {
+                return i;
+            }
+        }
+
+        return -1;
+    }
+};
+

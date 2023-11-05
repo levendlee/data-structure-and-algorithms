@@ -39,3 +39,52 @@ public:
         }
     }
 };
+
+// 2023/11/04
+
+class Solution {
+public:
+    string intToRoman(int num) {
+        int n = 7;
+        int values[] = {1, 5, 10, 50, 100, 500, 1000};
+        char symbols[] = {'I', 'V', 'X', 'L', 'C', 'D', 'M'};
+
+        string res;
+        int i = 0;
+        for (int base = 10; base <= 1000; base *= 10) {
+            i += 2;
+            int reminder = num % 10;
+            num = num / 10;
+            char c1 = symbols[i - 2], c2 = symbols[i - 1], c3 = symbols[i];
+            if (reminder == 0) {
+                continue;
+            }
+            else if (reminder < 4) {
+                res += string(reminder, c1);
+            }
+            else if (reminder == 4) {
+                res += c2;
+                res += c1;
+            }
+            else if (reminder == 5) {
+                res += c2;
+            }
+            else if (reminder < 9) {
+                res += string(reminder - 5, c1) + c2;
+            }
+            else {
+                res += c3;
+                res += c1;
+            }
+        }
+
+        if (num) {
+            res += string(num, 'M');
+        }
+
+        reverse(res.begin(), res.end());
+
+        return res;
+    }
+};
+
