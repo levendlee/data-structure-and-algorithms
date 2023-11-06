@@ -97,3 +97,66 @@ public:
         return sstack.top() * vstack.top();
     }
 };
+
+//
+
+class Solution {
+public:
+    int calculate(string s) {
+        int i = 0, j = 0;
+        while (j < s.size()) {
+            if (s[j] != ' ') {
+                s[i] = s[j];
+                ++i;
+            }
+            ++j;
+        }
+        const int n = i;
+
+        function<int(int&)> read;
+        function<int(int, int)> calc;
+
+        read = [&](int& idx) {
+            if (s[idx] == '(') {
+                int brackets = 1;
+                int start = idx;
+                ++idx;
+                while (idx < n && brackets > 0) {
+                    brackets += s[idx] == '(';
+                    brackets -= s[idx] == ')';
+                    ++idx;
+                }
+                return calc(start + 1, idx - 2);
+            } else {
+                int start = idx;
+                while (idx < n && isdigit(s[idx])) {
+                    ++idx;
+                }
+                return stoi(s.substr(start, idx - start));
+            }
+        };
+
+        calc = [&](int idx, int end) {
+            int res = 0;
+            if (s[idx] == '-') {
+                res = 0;
+            } else {
+                res = read(idx);
+            }
+
+            while (idx <= end) {
+                char op = s[idx++];
+                int num = read(idx);
+                if (op == '+') {
+                    res += num;
+                } else {
+                    res -= num;
+                }
+            }
+
+            return res;
+        };
+
+        return calc(0, n - 1);
+    }
+};
