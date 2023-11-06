@@ -39,3 +39,43 @@ public:
         return calcSize(root);
     }
 };
+
+//
+
+class Solution {
+public:
+    int countNodes(TreeNode* root) {
+        if (!root) return 0;
+
+        int h = 0;
+        auto node = root;
+        while (node) {
+            node = node->left;
+            ++h;
+        }
+
+        int lo = 0, hi = (1 << (h - 1)) - 1;
+        while (lo < hi) {
+            int mid = (lo + hi + 1) / 2;
+
+            auto node = root;
+            int bits = h - 1;
+            while (bits) {
+                if ((mid >> (bits - 1)) & 0x1) {
+                    node = node->right;
+                } else {
+                    node = node->left;
+                }
+                --bits;
+            }
+            if (node) {
+                lo = mid;
+            } else {
+                hi = mid - 1;
+            }
+        }
+
+        return (1 << (h - 1)) + lo;
+
+    }
+};

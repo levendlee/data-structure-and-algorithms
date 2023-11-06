@@ -26,3 +26,19 @@ public:
         return *std::max_element(dp.begin(), dp.end());
     }
 };
+
+//
+
+class Solution {
+public:
+    int maxProfit(int k, vector<int>& prices) {
+        vector<int64_t> sell(k, INT_MIN), buy(k, INT_MIN);
+        for (auto p : prices) {
+            for (int i = k - 1; i >= 0; --i) {
+                sell[i] = max(sell[i], buy[i] + p);
+                buy[i] = max(buy[i], (i == 0 ? 0 : sell[i-1]) - p);
+            }
+        }
+        return max(*max_element(sell.begin(), sell.end()), int64_t(0));
+    }
+};

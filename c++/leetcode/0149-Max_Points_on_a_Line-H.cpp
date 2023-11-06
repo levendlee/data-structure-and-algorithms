@@ -64,3 +64,110 @@ public:
         return max_points;
     }
 };
+
+//
+
+class Solution {
+public:
+    int maxPoints(vector<vector<int>>& points) {
+        const int n = points.size();
+        if (n <= 2) return n;
+
+        auto encode = [n](int i, int j) {
+            if (i > j) swap(i, j);
+            return i * n + j;
+        };
+
+        auto decode = [n](int k) -> pair<int, int> {
+            return {k / n, k % n};
+        };
+
+        auto on_line = [&points](int a, int b, int c) {
+            auto& pa = points[a], pb = points[b], pc = points[c];
+            return (pa[1] - pb[1]) * (pa[0] - pc[0]) == (pa[1] - pc[1]) * (pa[0] - pb[0]);
+        };
+
+        unordered_map<int, vector<int>> edges;
+        for (int i = 0; i < n; ++i) {
+            for (int j = i + 1; j < n; ++j) {
+                for (int k = j + 1; k < n; ++k) {
+                    if (on_line(i, j, k)) {
+                        int e0 = encode(i, j);
+                        int e1 = encode(j, k);
+                        int e2 = encode(i, k);
+
+                        edges[e0].push_back(e1);
+                        edges[e1].push_back(e0);
+                        edges[e1].push_back(e2);
+                        edges[e2].push_back(e1);
+                        edges[e0].push_back(e2);
+                        edges[e2].push_back(e0);
+                    }
+                }
+            }
+        }
+
+        size_t max_points = 0;
+        unordered_set<int> visited_edges;
+        for (int i = 0; i < n; ++i) {
+            for (int j = i + 1; j < n; ++j) {
+                int e = encode(i, j);
+                unordered_set<int> points;
+                function<void(int)> dfs;
+                dfs = [&](int e) {
+                    if (visited_edges.count(e)) return;
+                    visited_edges.insert(e);
+                    auto [i, j] = decode(e);
+                    points.insert(i);
+                    points.insert(j);
+                    for (auto next_e : edges[e]) {
+                        dfs(next_e);
+                    }
+                };
+                dfs(e);
+                max_points = max(max_points, points.size());
+            }
+        }
+
+        return max_points;
+    }
+};
+
+//
+
+class Solution {
+public:
+    int maxPoints(vector<vector<int>>& points) {
+        const int n = points.size();
+        if (n <= 2) return n;
+
+        auto encode = [n](int i, int j) {
+            if (i > j) swap(i, j);
+            return i * n + j;
+        };
+
+        auto decode = [n](int k) -> pair<int, int> {
+            return {k / n, k % n};
+        };
+
+        auto on_line = [&points](int a, int b, int c) {
+            auto &pa = points[a], &pb = points[b], &pc = points[c];
+            return (pa[1] - pb[1]) * (pa[0] - pc[0]) == (pa[1] - pc[1]) * (pa[0] - pb[0]);
+        };
+
+        int ans = 0;
+        for (int i = 0; i < n; ++i) {
+            for (int j = i + 1; j < n; ++j) {
+                int cnt = 0;
+                for (int k = j + 1; k < n; ++k) {
+                    if (on_line(i, j, k)) {
+                        ++cnt;
+                    }
+                }
+                ans = max(ans, cnt + 2);
+            }
+        }
+
+        return ans;
+    }
+};

@@ -17,3 +17,18 @@ public:
         return std::max(dp[1], dp[3]);
     }
 };
+
+// 
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int64_t buy0 = INT_MIN, sell0 = INT_MIN, buy1 = INT_MIN, sell1 = INT_MIN;
+        for (auto p : prices) {
+            sell1 = max(sell1, buy1 + p);
+            buy1 = max(buy1, sell0 - p);
+            sell0 = max(sell0, buy0 + p);
+            buy0 = max(buy0, int64_t(-p));
+        }
+        return max({sell0, sell1, int64_t(0)});
+    }
+};
