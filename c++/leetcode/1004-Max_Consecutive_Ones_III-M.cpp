@@ -20,3 +20,22 @@ public:
         return len;
     }
 };
+
+//
+
+class Solution {
+public:
+    int longestOnes(vector<int>& nums, int k) {
+        const int n = nums.size();
+        int longest = 0;
+        int i = 0, j = 0, num_zeros = 0;
+        while (j < n) {
+            num_zeros += nums[j++] == 0;
+            while (num_zeros > k) {
+                num_zeros -= nums[i++] == 0;
+            }
+            longest = max(longest, j - i);
+        }
+        return longest;
+    }
+};

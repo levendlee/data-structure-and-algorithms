@@ -18,3 +18,22 @@ public:
         }
     }
 };
+
+//
+
+class Solution {
+public:
+    void moveZeroes(vector<int>& nums) {
+        const int n = nums.size();
+        int i = 0, j = 0;
+        while (j < n) {
+            if (nums[j]) {
+                nums[i++] = nums[j];
+            }
+            ++j;
+        }
+        while (i < n) {
+            nums[i++] = 0;
+        }
+    }
+};
