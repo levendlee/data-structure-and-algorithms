@@ -35,3 +35,31 @@ public:
         return odd_head->next;
     }
 };
+
+//
+
+lass Solution {
+public:
+    ListNode* oddEvenList(ListNode* head) {
+        ListNode* odd_pre_head = new ListNode();
+        auto odd = odd_pre_head;
+        ListNode* even_pre_head = new ListNode();
+        auto even = even_pre_head;
+
+        int i = 1;
+        ListNode* node = head;
+        while (node) {
+            if (i++ & 0x1) {
+                odd = odd->next = node;
+            } else {
+                even = even->next = node;
+            }
+            node = node->next;
+        }
+
+        odd->next = even_pre_head->next;
+        even->next = nullptr;
+
+        return odd_pre_head->next;
+    }
+};

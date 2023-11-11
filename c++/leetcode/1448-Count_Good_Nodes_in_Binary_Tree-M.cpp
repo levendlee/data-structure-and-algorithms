@@ -30,3 +30,21 @@ public:
         return cnt;
     }
 };
+
+//
+
+class Solution {
+public:
+    int goodNodes(TreeNode* root) {
+        function<int(TreeNode*, int)> traverse;
+        traverse = [&](TreeNode* node, int max_val) {
+            if (!node) return 0;
+            int good_ones = node->val >= max_val;
+            max_val = max(node->val, max_val);
+            good_ones += traverse(node->left, max_val);
+            good_ones += traverse(node->right, max_val);
+            return good_ones;
+        };
+        return traverse(root, INT_MIN);
+    }
+};

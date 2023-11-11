@@ -25,3 +25,23 @@ public:
         return pre;
     }
 };
+
+//
+
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head) {
+        ListNode* reverse_node = nullptr;
+        ListNode* node = head;
+        ListNode* next_node;
+
+        while (node) {
+            next_node = node->next;
+            node->next = reverse_node;
+            reverse_node = node;
+            node = next_node;
+        }
+
+        return reverse_node;
+    }
+};
