@@ -40,3 +40,33 @@ public:
         return changed_cnt;
     }
 };
+
+class Solution {
+public:
+    int minReorder(int n, vector<vector<int>>& connections) {
+        unordered_map<int, vector<int>> edges, r_edges;
+        for (const auto& c : connections) {
+            edges[c[0]].push_back(c[1]);
+            r_edges[c[1]].push_back(c[0]);
+        }
+
+        vector<bool> visited(n, false);
+        int reorder = 0;
+        function<void(int)> dfs;
+        dfs = [&](int i) {
+            visited[i] = true;
+            for (auto j : r_edges[i]) {
+                if (!visited[j]) dfs(j);
+            }
+            for (auto j : edges[i]) {
+                if (!visited[j]) {
+                    dfs(j);
+                    ++reorder;
+                }
+            }
+        };
+        dfs(0);
+
+        return reorder;
+    }
+};

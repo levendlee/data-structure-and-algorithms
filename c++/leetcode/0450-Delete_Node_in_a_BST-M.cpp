@@ -40,3 +40,47 @@ public:
         return root;
     }
 };
+
+//
+
+class Solution {
+public:
+    TreeNode* deleteNode(TreeNode* root, int key) {
+
+        function<void(TreeNode*&)> dfs;
+
+        dfs = [&](TreeNode*& root) {
+            if (!root) return;
+            if (key < root->val) {
+                dfs(root->left);
+            } else if (key > root->val) {
+                dfs(root->right);
+            } else {
+                if (root->right) {
+                    TreeNode* pre = root;
+                    TreeNode* node = root->right;
+                    while (node) {
+                        pre = node;
+                        node = node->left;
+                    }
+                    pre->left = root->left;
+                    root = root->right;
+                } else if (root->left) {
+                    TreeNode* pre = root;
+                    TreeNode* node = root->left;
+                    while (node) {
+                        pre = node;
+                        node = node->right;
+                    }
+                    pre->right = root->right;
+                    root = root->left;
+                } else {
+                    root = nullptr;
+                }
+            }
+        };
+
+        dfs(root);
+        return root;
+    }
+};
