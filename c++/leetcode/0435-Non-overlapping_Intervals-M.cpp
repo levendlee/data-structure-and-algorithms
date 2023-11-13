@@ -17,3 +17,28 @@ public:
         return intervals.size() - cnt;
     }
 };
+
+//
+
+class Solution {
+public:
+    int eraseOverlapIntervals(vector<vector<int>>& intervals) {
+        sort(intervals.begin(), intervals.end());
+
+        int erase = 0;
+        int pend = INT_MIN;
+        for (const auto& interval : intervals) {
+            int start = interval[0];
+            int end = interval[1];
+            if (pend > start) {
+                ++erase;
+                pend = min(end, pend);
+            } else {
+                pend = end;
+            }
+
+        }
+
+        return erase;
+    }
+};
