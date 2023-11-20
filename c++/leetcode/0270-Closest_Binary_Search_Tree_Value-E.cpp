@@ -41,3 +41,30 @@ public:
         return closest_;
     }
 };
+
+//
+
+class Solution {
+public:
+    int closestValue(TreeNode* root, double target) {
+        int closest_val = INT_MIN;
+        double closest_diff = INT_MAX;
+
+        auto node = root;
+        while (node) {
+            int cur_val = node->val;
+            double cur_diff = abs(target - node->val);
+            if ((cur_diff < closest_diff) || (cur_diff == closest_diff) && (cur_val < closest_val)) {
+                closest_val = cur_val;
+                closest_diff = cur_diff;
+            }
+            if (node->val >= target) {
+                node = node->left;
+            } else {
+                node = node->right;
+            }
+        };
+
+        return closest_val;
+    }
+};

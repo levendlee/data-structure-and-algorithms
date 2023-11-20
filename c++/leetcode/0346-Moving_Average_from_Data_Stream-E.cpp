@@ -29,3 +29,28 @@ public:
  * MovingAverage* obj = new MovingAverage(size);
  * double param_1 = obj->next(val);
  */
+
+ //
+
+ class MovingAverage {
+public:
+    MovingAverage(int size) {
+        size_ = size;
+        sum_ = 0;
+    }
+
+    double next(int val) {
+        q_.push(val);
+        sum_ += val;
+        if (q_.size() > size_) {
+            sum_ -= q_.front();
+            q_.pop();
+        }
+        return sum_ * 1.0 / q_.size();
+    }
+
+private:
+    int size_;
+    int sum_;
+    queue<int> q_;
+};

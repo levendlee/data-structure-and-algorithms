@@ -41,3 +41,45 @@ public:
         return res;
     }
 };
+
+//
+
+class Solution {
+public:
+    vector<int> findDiagonalOrder(vector<vector<int>>& mat) {
+        const int m = mat.size(), n = mat[0].size();
+
+        vector<int> res;
+        int i = 0, j = 0;
+        bool d = false;
+        while (res.size() < m * n) {
+            if (i >= 0 && i < m && j >= 0 && j < n) {
+                res.push_back(mat[i][j]);
+            }
+            if (d) {
+                ++i;
+                --j;
+            } else {
+                --i;
+                ++j;
+            }
+            if (i < 0) {
+                d = !d;
+                i = 0;
+            } else if (i >= m) {
+                d = !d;
+                i = m - 1;
+                j += 2;
+            } else if (j < 0) {
+                d = !d;
+                j = 0;
+            } else if (j >= n) {
+                d = !d;
+                j = n - 1;
+                i += 2;
+            }
+        }
+
+        return res;
+    }
+};

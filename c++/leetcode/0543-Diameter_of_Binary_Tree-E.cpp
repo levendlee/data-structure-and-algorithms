@@ -26,3 +26,24 @@ public:
         return depthAndDiameter(root).second;
     }
 };
+
+//
+
+class Solution {
+public:
+    int diameterOfBinaryTree(TreeNode* root) {
+        int diameter = 0;
+
+        function<int(TreeNode*)> dfs;
+        dfs = [&](TreeNode* node) {
+            if (!node) return 0;
+            int ld = dfs(node->left);
+            int rd = dfs(node->right);
+            diameter = max(diameter, ld + 1 + rd);
+            return max(ld, rd) + 1;
+        };
+        dfs(root);
+
+        return diameter - 1;
+    }
+};

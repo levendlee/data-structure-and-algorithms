@@ -75,3 +75,34 @@ public:
         return (wins[0] || wins[1] || wins[2] || wins[3]) ? player : 0;
     }
 };
+
+//
+
+class TicTacToe {
+public:
+    TicTacToe(int n) {
+        n_ = n;
+        board_ = vector<vector<int>>(n, vector<int>(n, 0));
+        row_sums_ = vector<vector<int>>(2, vector<int>(n, 0));
+        col_sums_ = vector<vector<int>>(2, vector<int>(n, 0));
+        diag_sums_ = vector<vector<int>>(2, vector<int>(2, 0));
+    }
+
+    int move(int row, int col, int player) {
+        board_[row][col] = player;
+        if (++row_sums_[player - 1][row] == n_ ||
+            ++col_sums_[player - 1][col] == n_ ||
+            row == col && ++diag_sums_[player - 1][0] == n_ ||
+            row + col == n_ - 1 && ++diag_sums_[player - 1][1] == n_) {
+            return player;
+        }
+        return 0;
+    }
+
+private:
+    int n_;
+    vector<vector<int>> board_;
+    vector<vector<int>> row_sums_;
+    vector<vector<int>> col_sums_;
+    vector<vector<int>> diag_sums_;
+};

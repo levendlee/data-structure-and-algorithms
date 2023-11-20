@@ -32,3 +32,25 @@ public:
         return false;
     }
 };
+
+//
+
+class Solution {
+public:
+    bool checkSubarraySum(vector<int>& nums, int k) {
+        if (nums.size() < 2) return false;
+
+        unordered_set<int> sum_rem_set;
+        sum_rem_set.insert(0);
+
+        int pre_sum = nums[0], cur_sum;
+        for (int i = 1; i < nums.size(); ++i) {
+            cur_sum = pre_sum + nums[i];
+            if (sum_rem_set.count(cur_sum % k)) return true;
+            sum_rem_set.insert(pre_sum % k);
+            pre_sum = cur_sum;
+        }
+
+        return false;
+    }
+};

@@ -29,3 +29,34 @@ public:
         return lo;
     }
 };
+
+//
+
+class Solution {
+public:
+    int shipWithinDays(vector<int>& weights, int days) {
+        int lo = *max_element(weights.begin(), weights.end());
+        int hi = accumulate(weights.begin(), weights.end(), 0);
+        while (lo < hi) {
+            int mid = (lo + hi) / 2;
+            int num_days = 0;
+            int total_weight = 0;
+            for (int w : weights) {
+                if (total_weight + w > mid) {
+                    total_weight = w;
+                    ++num_days;
+                } else {
+                    total_weight += w;
+                }
+            }
+            ++num_days;
+
+            if (num_days > days) {
+                lo = mid + 1;
+            } else {
+                hi = mid;
+            }
+        }
+        return lo;
+    }
+};
