@@ -38,3 +38,44 @@ public:
         return res;
     }
 };
+
+//
+
+class Solution {
+public:
+    vector<vector<int>> verticalTraversal(TreeNode* root) {
+        if (!root) return {};
+
+        queue<pair<TreeNode*, int>> bfs;
+        bfs.push({root, 0});
+
+        int i = 0;
+        int min_col = 0, max_col = 0;
+        unordered_map<int, vector<int>> cols;
+        while(!bfs.empty()) {
+            int search_space = bfs.size();
+            unordered_map<int, vector<int>> cur_cols;
+
+            for (int k = 0; k < search_space; ++k) {
+                auto [node, j] = bfs.front();
+                bfs.pop();
+                min_col = min(min_col, j);
+                max_col = max(max_col, j);
+                cur_cols[j].push_back(node->val);
+                if (node->left) bfs.push({node->left, j - 1});
+                if (node->right) bfs.push({node->right, j + 1});
+            }
+
+            for (auto& [j, vals] : cur_cols) {
+                sort(vals.begin(), vals.end());
+                cols[j].insert(cols[j].end(), vals.begin(), vals.end());
+            }
+        }
+
+        vector<vector<int>> res;
+        for (int j = min_col; j <= max_col; ++j) {
+            res.emplace_back(move(cols[j]));
+        }
+        return res;
+    }
+};

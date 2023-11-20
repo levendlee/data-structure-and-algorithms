@@ -29,3 +29,49 @@ public:
         return true;
     }
 };
+
+//
+
+class Solution {
+public:
+    bool isToeplitzMatrix(vector<vector<int>>& matrix) {
+        const int m = matrix.size(), n = matrix[0].size();
+
+        for (int r = 0; r < m; ++r) {
+            int i = r, j = 0;
+            while (i < m && j < n) {
+                if (matrix[i][j] != matrix[r][0]) return false;
+                ++i;
+                ++j;
+            }
+        }
+
+        for (int c = 1; c < n; ++ c) {
+            int i = 0, j = c;
+            while (i < m && j < n) {
+                if (matrix[i][j] != matrix[0][c]) return false;
+                ++i;
+                ++j;
+            }
+        }
+
+        return true;
+    }
+};
+
+//
+
+class Solution {
+public:
+    bool isToeplitzMatrix(vector<vector<int>>& matrix) {
+        const int m = matrix.size(), n = matrix[0].size();
+
+        for (int i = 0; i < m; ++i) {
+            for (int j = 0; j < n; ++j) {
+                if (i > 0 && j > 0 && matrix[i-1][j-1] != matrix[i][j]) return false;
+            }
+        }
+
+        return true;
+    }
+};

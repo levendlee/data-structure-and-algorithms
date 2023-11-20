@@ -20,3 +20,27 @@ public:
         return total_cnts;
     }
 };
+
+//
+
+class Solution {
+public:
+    int subarraySum(vector<int>& nums, int k) {
+        const int n = nums.size();
+
+        int sum = 0;
+        int subarray_count = 0;
+        unordered_map<int, int> prefix_sum_count;
+        prefix_sum_count[0] = 1;
+        for (int n : nums) {
+            sum += n;
+            int pre_sum = sum - k;
+            if (prefix_sum_count.count(pre_sum)) {
+                subarray_count += prefix_sum_count[pre_sum];
+            }
+            ++prefix_sum_count[sum];
+        }
+
+        return subarray_count;
+    }
+};

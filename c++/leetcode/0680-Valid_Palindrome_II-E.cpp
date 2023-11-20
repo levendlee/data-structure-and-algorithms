@@ -26,3 +26,35 @@ public:
         return helper(s, false, 0, n - 1);
     }
 };
+
+//
+
+class Solution {
+public:
+    bool validPalindrome(string s) {
+        const int n = s.size();
+
+        function<bool(bool)> helper;
+        helper = [&](bool delete_left) {
+            bool deleted = false;
+            int i = 0, j = n - 1;
+            while (i < j) {
+                if (s[i] != s[j]) {
+                    if (deleted) return false;
+                    if (delete_left) {
+                        ++i;
+                    } else {
+                        --j;
+                    }
+                    deleted = true;
+                } else {
+                    ++i;
+                    --j;
+                }
+            }
+            return true;
+        };
+
+        return helper(true) || helper(false);
+    }
+};

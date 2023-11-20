@@ -52,3 +52,64 @@ public:
         return pred;
     }
 };
+
+//
+
+class Solution {
+public:
+    Node* treeToDoublyList(Node* root) {
+        if (!root) {
+            return nullptr;
+        }
+
+        function<pair<Node*, Node*>(Node*)> inorder;
+        inorder = [&](Node* root) -> pair<Node*, Node*> {
+            if (!root) {
+                return {nullptr, nullptr};
+            }
+            auto [lmin, lmax] = inorder(root->left);
+            if (lmax) {
+                lmax->right = root;
+                root->left = lmax;
+            }
+            auto [rmin, rmax] = inorder(root->right);
+            if (rmin) {
+                root->right = rmin;
+                rmin->left = root;
+            }
+            return {lmin ? lmin : root, rmax ? rmax : root};
+        };
+        auto [tree_min, tree_max] = inorder(root);
+        tree_min->left = tree_max;
+        tree_max->right = tree_min;
+        return tree_min;
+    }
+};
+
+//
+
+class Solution {
+public:
+    Node* treeToDoublyList(Node* root) {
+        if (!root) {
+            return nullptr;
+        }
+
+        function<Node*(Node*, Node*)> inorder;
+        inorder = [&](Node* cur, Node* pre) {
+            if (!cur) return pre;
+            pre = inorder(cur->left, pre);
+            pre->right = cur;
+            cur->left = pre;
+            return inorder(cur->right, cur);
+        };
+
+        Node* prehead = new Node(0);
+        auto tail = inorder(root, prehead);
+        auto head = prehead->right;
+        head->left = tail;
+        tail->right = head;
+
+        return head;
+    }
+};

@@ -49,3 +49,36 @@ public:
         return stoi(str);
     }
 };
+
+//
+
+class Solution {
+public:
+    int maximumSwap(int num) {
+        string num_str = to_string(num);
+        const int n = num_str.size();
+
+        vector<char> highest_bit(n);
+        char c = '0';
+        for (int i = n - 1; i >= 0; --i) {
+            c = max(c, num_str[i]);
+            highest_bit[i] = c;
+        }
+
+        int i = 0;
+        while (i < n) {
+            if (highest_bit[i] != num_str[i]) break;
+            ++i;
+        }
+        if (i == n) return num;
+
+        int j = n - 1;
+        while (j >= 0) {
+            if (highest_bit[i] == num_str[j]) break;
+            --j;
+        }
+
+        swap(num_str[i], num_str[j]);
+        return stoi(num_str);
+    }
+};

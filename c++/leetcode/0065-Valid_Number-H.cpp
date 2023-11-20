@@ -47,3 +47,47 @@ public:
         return !(!int_num_set && !dec_num_set || exp_set && !exp_num_set);
     }
 };
+
+//
+
+class Solution {
+public:
+    bool isNumber(string s) {
+        const int n = s.size();
+
+        auto read_int = [&](int& i) {
+            int j = i;
+            while (i < n && isdigit(s[i])) {
+                ++i;
+            }
+            return j != i;
+        };
+
+        bool int0 = false, int1 = false, int2 = false, dot = false, e = false, sign0 = false, sign1 = false;
+
+        int i = 0;
+
+        if (s[i] == '+' || s[i] == '-') { sign0 = true; ++i; }
+
+        int0 = read_int(i);
+
+        if (i == n) goto resolve;
+        if (s[i] == '.') { dot = true; ++i; }
+
+        int1 = read_int(i);
+
+        if (i == n) goto resolve;
+        if (s[i] == 'e' || s[i] == 'E') { e = true; ++i; }
+
+        if (i == n) goto resolve;
+        if (s[i] == '+' || s[i] == '-') { sign1 = true; ++i; }
+
+        int2 = read_int(i);
+
+        if (i != n) return false;
+
+        resolve:
+        return (int0 || dot && int1) && (!e && !int2 || e && int2) && !(sign1 && !int2);
+
+    }
+};

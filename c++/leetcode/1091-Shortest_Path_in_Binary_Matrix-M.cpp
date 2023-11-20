@@ -43,3 +43,40 @@ public:
         return -1;
     }
 };
+
+//
+
+class Solution {
+public:
+    int shortestPathBinaryMatrix(vector<vector<int>>& grid) {
+        const int n = grid.size();
+
+        queue<pair<int, int>> bfs;
+        if (grid[0][0] != 0) return -1;
+        if (n == 1) return 1;
+
+        int steps = 1;
+        bfs.push({0, 0});
+
+        while (!bfs.empty()) {
+            int search_space = bfs.size();
+            ++steps;
+            for (int k = 0; k < search_space; ++k) {
+                auto [i, j] = bfs.front();
+                bfs.pop();
+                for (int di = -1; di <= 1; ++di) {
+                    for (int dj = -1; dj <=1; ++dj) {
+                        if (di == 0 && dj == 0) continue;
+                        int ni = i + di, nj = j + dj;
+                        if (ni < 0 || ni >= n || nj < 0 || nj >= n || grid[ni][nj]) continue;
+                        if (ni == n-1 && nj == n-1) return steps;
+                        grid[ni][nj] = 1;
+                        bfs.push({ni, nj});
+                    }
+                }
+            }
+        }
+
+        return -1;
+    }
+};

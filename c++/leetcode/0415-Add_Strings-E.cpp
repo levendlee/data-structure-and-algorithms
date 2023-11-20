@@ -22,3 +22,29 @@ public:
         return res;
     }
 };
+
+//
+
+class Solution {
+public:
+    string addStrings(string num1, string num2) {
+        const int n1 = num1.size(), n2 = num2.size();
+        string res;
+        int carry = 0;
+        int i = n1 - 1, j = n2 - 1;
+        while (i >= 0 || j >= 0) {
+            int lhs = i >= 0 ? (num1[i] - '0') : 0;
+            int rhs = j >= 0 ? (num2[j] - '0') : 0;
+            int ans = lhs + rhs + carry;
+            res.push_back(ans % 10 + '0');
+            carry = ans / 10;
+            --i;
+            --j;
+        }
+        if (carry) {
+            res.push_back(carry + '0');
+        }
+        reverse(res.begin(), res.end());
+        return res;
+    }
+};

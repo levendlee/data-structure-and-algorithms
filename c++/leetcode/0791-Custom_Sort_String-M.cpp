@@ -17,3 +17,18 @@ public:
         return T;
     }
 };
+
+//
+
+class Solution {
+public:
+    string customSortString(string order, string s) {
+        int idx[26] = {-1};
+        int i = 0;
+        for (char c : order) {
+            idx[c - 'a'] = i++;
+        }
+        sort(s.begin(), s.end(), [&](char a, char b) { return idx[a - 'a'] < idx[b - 'a']; });
+        return s;
+    }
+};

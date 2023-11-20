@@ -32,3 +32,45 @@ public:
         return s;
     }
 };
+
+//
+
+class Solution {
+public:
+    string minRemoveToMakeValid(string s) {
+        unordered_set<int> remove_idx;
+        stack<int> stk;
+
+        const int n = s.size();
+        for (int i = 0; i < n; ++i) {
+            char c = s[i];
+
+            if (c == '(') {
+                stk.push(i);
+            } else if (c == ')') {
+                if (stk.empty()) {
+                    remove_idx.insert(i);
+                } else {
+                    stk.pop();
+                }
+            }
+        }
+        while (!stk.empty()) {
+            remove_idx.insert(stk.top());
+            stk.pop();
+        }
+
+        string removed_s;
+        int i = 0, j = 0;
+        while (i < n) {
+            if (remove_idx.count(i)) {
+                ++i;
+            } else {
+                removed_s.push_back(s[i]);
+                ++i;
+            }
+        }
+
+        return removed_s;
+    }
+};

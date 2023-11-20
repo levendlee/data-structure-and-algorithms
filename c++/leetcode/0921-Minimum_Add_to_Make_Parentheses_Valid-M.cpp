@@ -16,3 +16,22 @@ public:
         return cnt;
     }
 };
+
+//
+
+class Solution {
+public:
+    int minAddToMakeValid(string s) {
+        int p = 0, insert = 0;
+        for (char c : s) {
+            p += c == '(';
+            p -= c == ')';
+            if (p < 0) {
+                ++insert;
+                p = 0;
+            }
+        }
+        insert += p;
+        return insert;
+    }
+};

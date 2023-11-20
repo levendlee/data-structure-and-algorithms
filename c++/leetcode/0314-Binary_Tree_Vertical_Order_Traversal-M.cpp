@@ -102,3 +102,45 @@ public:
         return res;
     }
 };
+
+//
+
+class Solution {
+public:
+    vector<vector<int>> verticalOrder(TreeNode* root) {
+        if (!root) {
+            return {};
+        }
+
+        vector<vector<int>> l_cols, r_cols;
+
+        queue<pair<TreeNode*, int>> bfs;
+        bfs.push({root, 0});
+
+        while (!bfs.empty()) {
+            int search_size = bfs.size();
+            for (int k = 0; k < search_size; ++k) {
+                auto [node, i] = bfs.front();
+                bfs.pop();
+
+                vector<vector<int>>& cols = i >= 0 ? r_cols : l_cols;
+                int idx = i >= 0 ? i : -i-1;
+                if (cols.size() < idx + 1) {
+                    cols.push_back({node->val});
+                } else {
+                    cols[idx].push_back(node->val);
+                }
+                if (node->left) {
+                    bfs.push({node->left, i-1});
+                }
+                if (node->right) {
+                    bfs.push({node->right, i+1});
+                }
+            }
+        }
+
+        reverse(l_cols.begin(), l_cols.end());
+        l_cols.insert(l_cols.end(), r_cols.begin(), r_cols.end());
+        return l_cols;
+    }
+};
