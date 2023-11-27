@@ -17,3 +17,26 @@ public:
         return endtimes.size();
     }
 };
+
+//
+
+class Solution {
+public:
+    int minMeetingRooms(vector<vector<int>>& intervals) {
+        size_t rooms = 0;
+
+        sort(intervals.begin(), intervals.end());
+        priority_queue<int> end_times;
+        for (const auto& it : intervals) {
+            int i = it[0], j = it[1];
+            while (!end_times.empty() && -end_times.top() <= i) {
+                end_times.pop();
+            }
+            end_times.push(-j);
+            rooms = max(end_times.size(), rooms);
+        }
+
+        return rooms;
+    }
+};
+

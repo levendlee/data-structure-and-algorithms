@@ -22,3 +22,25 @@ public:
         return cur;
     }
 };
+
+//
+
+class Solution {
+public:
+    string countAndSay(int n) {
+        string s = "1";
+        for (int i = 2; i <= n; ++i) {
+            string ns;
+            int k = 0;
+            while (k < s.size()) {
+                int start = k;
+                while (k + 1 < s.size() && s[k] == s[k + 1]) ++k;
+                int repeats = k - start + 1;
+                ns += to_string(repeats) + s[k];
+                ++k;
+            }
+            s = move(ns);
+        }
+        return s;
+    }
+};

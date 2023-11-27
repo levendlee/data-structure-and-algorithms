@@ -24,3 +24,31 @@ public:
         return res;
     }
 };
+
+//
+
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        unordered_map<int, int> cnts;
+        for (int n : nums) {
+            ++cnts[n];
+        }
+
+        priority_queue<pair<int, int>> pq;
+        for (const auto[n, cnt] : cnts) {
+            pq.push({-cnt, n});
+            if (pq.size() > k) {
+                pq.pop();
+            }
+        }
+
+        vector<int> res;
+        while (!pq.empty()) {
+            auto [ncnt, n] = pq.top();
+            pq.pop();
+            res.push_back(n);
+        }
+        return res;
+    }
+};
