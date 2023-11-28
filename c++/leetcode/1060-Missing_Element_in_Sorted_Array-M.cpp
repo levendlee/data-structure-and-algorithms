@@ -28,3 +28,30 @@ public:
         return nums[idx] + k - missing;
     }
 };
+
+..
+
+class Solution {
+public:
+    int missingElement(vector<int>& nums, int k) {
+        const int n = nums.size();
+        int lo = 0, hi = n;
+        auto get_missing = [&](int i) {
+            return nums[i] - nums[0] - i;
+        };
+
+        while (lo < hi) {
+            int mid = (lo + hi + 1) / 2;
+            int pre_missing = mid == 0 ? 0 : get_missing(mid - 1);
+            int cur_missing = mid == n ? pre_missing : get_missing(mid);
+            if (cur_missing < k) {
+                lo = mid;
+            } else if (pre_missing >= k) {
+                hi = mid - 1;
+            } else {
+                return nums[mid - 1] + k - pre_missing;
+            }
+        }
+        return nums[n - 1] + k - get_missing(n - 1);
+    }
+};

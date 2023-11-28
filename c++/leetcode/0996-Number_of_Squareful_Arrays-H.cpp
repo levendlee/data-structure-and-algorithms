@@ -37,3 +37,39 @@ public:
         return backtracking(A, used, cur);
     }
 };
+
+//
+
+class Solution {
+public:
+    int numSquarefulPerms(vector<int>& nums) {
+        sort(nums.begin(), nums.end());
+
+        auto is_sq = [&](int num) {
+            int x = sqrt(num);
+            return x * x == num;
+        };
+
+        const int n = nums.size();
+        const int fullmask = (1 << n) - 1;
+
+        function<int(int, int)> dfs;
+        dfs = [&](int bitmask, int pre) {
+            if (bitmask == fullmask) return 1;
+
+            int total = 0;
+            int pre_check = -1;
+            for (int i = 0; i < n; ++i) {
+                if (bitmask & (1 << i)) continue;
+                if (nums[i] == pre_check) continue;
+                pre_check = nums[i];
+                if (bitmask == 0 || is_sq(pre + nums[i])) {
+                    total += dfs(bitmask | (1 << i), nums[i]);
+                }
+            }
+            return total;
+        };
+
+        return dfs(0, 0);
+    }
+};

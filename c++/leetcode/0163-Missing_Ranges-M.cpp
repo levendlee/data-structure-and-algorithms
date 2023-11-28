@@ -23,3 +23,24 @@ public:
         return res;
     }
 };
+
+//
+
+class Solution {
+public:
+    vector<vector<int>> findMissingRanges(vector<int>& nums, int lower, int upper) {
+        vector<vector<int>> res;
+
+        int last = lower - 1;
+        for (int n : nums) {
+            if (n > last + 1) {
+                res.push_back({last + 1, n - 1});
+            }
+            last = n;
+        }
+        if (upper != last) {
+            res.push_back({last + 1, upper});
+        }
+        return res;
+    }
+};

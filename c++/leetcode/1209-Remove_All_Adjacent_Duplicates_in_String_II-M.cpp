@@ -27,3 +27,36 @@ public:
         return res;
     }
 };
+
+//
+
+class Solution {
+public:
+    string removeDuplicates(string s, int k) {
+        stack<pair<char, int>> stk;
+
+        for (char c : s) {
+            if (stk.empty() || stk.top().first != c) {
+                stk.push({c, 1});
+            } else {
+                ++stk.top().second;
+            }
+            while (!stk.empty() && stk.top().second >= k) {
+                int repeats = stk.top().second / k;
+                stk.top().second -= k * repeats;
+                if (!stk.top().second) {
+                    stk.pop();
+                }
+            }
+        }
+
+        string res;
+        while (!stk.empty()) {
+            // res = string(stk.top().second, stk.top().first) + res;
+            res += string(stk.top().second, stk.top().first);
+            stk.pop();
+        }
+        reverse(res.begin(), res.end());
+        return res;
+    }
+};

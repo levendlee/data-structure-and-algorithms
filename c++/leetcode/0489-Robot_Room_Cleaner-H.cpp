@@ -57,3 +57,64 @@ public:
         dfs(robot, INT_MAX, INT_MAX, 0);
     }
 };
+
+//
+
+class Solution {
+public:
+    void cleanRoom(Robot& robot) {
+        struct Node {
+            int i;
+            int j;
+
+            bool operator==(const Node& other) const {
+                return i == other.i && j == other.j;
+            }
+        };
+
+        struct NodeHash {
+            size_t operator()(const Node& node) const {
+                return node.i ^ node.j;
+            }
+        };
+
+        unordered_set<Node, NodeHash> cleaned;
+
+        function<void(int, int, int)> dfs;
+        dfs = [&](int i, int j, int d) {
+            Node node = {i, j};
+            // Avoid visiting cleaned cells unless in going back mode.
+            if (cleaned.count(node)) return;
+            cleaned.insert(node);
+
+            robot.clean();
+
+            // direction: {right, down, left, up};
+            constexpr int offsets[4][2] = {{1, 0}, {0, 1}, {-1, 0}, {0, -1}};
+            for (int k = 0; k < 4; ++k) {
+                // New direction.
+                int dd = (d + k) % 4;
+                // New indicies.
+                int ii = i + offsets[dd][0];
+                int jj = j + offsets[dd][1];
+                if (robot.move()) {
+                    // DFS search
+                    dfs(ii, jj, dd);
+                    // Change direction to opposite.
+                    robot.turnRight();
+                    robot.turnRight();
+                    // Move back.
+                    robot.move();
+                    // Change direction back to original.
+                    robot.turnRight();
+                    robot.turnRight();
+                }
+                robot.turnRight();
+            }
+            // Turn in a circle. Go back to original direction and original location.
+        };
+
+        // Starts search.
+        dfs(0, 0, 0);
+    }
+};
