@@ -30,3 +30,27 @@ public:
         return complete_;
     }
 };
+
+//
+
+class Solution {
+public:
+    bool isCompleteTree(TreeNode* root) {
+        bool is_complete = true;
+
+        function<pair<int, int>(TreeNode*, int)> dfs;
+        dfs = [&](TreeNode* node, int depth) -> pair<int, int> {
+            if (!node) return {depth, depth};
+            auto [l_min, l_max] = dfs(node->left, depth + 1);
+            auto [r_min, r_max] = dfs(node->right, depth + 1);
+            if (r_max > l_min || l_max - r_min > 1) {
+                is_complete = false;
+                return {0, 0};
+            }
+            return {r_min, l_max};
+        };
+
+        dfs(root, 0);
+        return is_complete;
+    }
+};

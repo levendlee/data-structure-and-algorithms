@@ -20,3 +20,20 @@ public:
         return requests;
     }
 };
+
+//
+
+class Solution {
+public:
+    int numFriendRequests(vector<int>& ages) {
+        sort(ages.begin(), ages.end());
+        int requests = 0;
+        for (int x : ages) {
+            int min_y = x / 2 + 7;
+            auto i = upper_bound(ages.begin(), ages.end(), min_y);
+            auto j = upper_bound(ages.begin(), ages.end(), x);
+            requests += max(int(j - i - 1), 0);
+        }
+        return requests;
+    }
+};

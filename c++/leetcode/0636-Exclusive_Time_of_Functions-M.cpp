@@ -31,3 +31,49 @@ public:
         return time;
     }
 };
+
+//
+
+class Solution {
+public:
+    vector<int> exclusiveTime(int n, vector<string>& logs) {
+        struct Log {
+            int id;
+            int timestamp;
+            bool start;
+        };
+
+        auto parse = [](const string& s) {
+            Log l;
+            int sep0 = s.find(':');
+            l.id = stoi(s.substr(0, sep0));
+            int sep1 = s.find(':', sep0 + 1);
+            l.start = s.substr(sep0 + 1, sep1 - sep0 -1) == "start";
+            l.timestamp = stoi(s.substr(sep1 + 1));
+            return l;
+        };
+
+        auto init_l = parse(logs[0]);
+        int pre_timestamp;
+
+        vector<int> time(n);
+        stack<int> callstack;
+
+        for (const auto& s : logs) {
+            auto l = parse(s);
+            if (l.start) {
+                if (!callstack.empty()) {
+                    time[callstack.top()] += l.timestamp - pre_timestamp;
+                }
+                pre_timestamp = l.timestamp;
+                callstack.push(l.id);
+            } else {
+                time[l.id] += l.timestamp + 1 - pre_timestamp;
+                pre_timestamp = l.timestamp + 1;
+                callstack.pop();
+            }
+        }
+
+        return time;
+    }
+};

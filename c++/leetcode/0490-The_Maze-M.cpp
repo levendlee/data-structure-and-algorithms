@@ -45,3 +45,50 @@ public:
         return false;
     }
 };
+
+//
+
+class Solution {
+public:
+    bool hasPath(vector<vector<int>>& maze, vector<int>& start, vector<int>& destination) {
+        const int m = maze.size(), n = maze[0].size();
+
+        // direction: 1: up; 2: down; 3: left; 4: right.
+        constexpr int offsets[4][2] = {{-1, 0}, {1, 0}, {0, -1}, {0, 1}};
+        auto valid_index = [&](int i, int j) {
+            return i >= 0 && i < m && j >= 0 && j < n;
+        };
+        auto hit_wall = [&](int i, int j) {
+            return !valid_index(i, j) || maze[i][j] & 0x1;
+        };
+
+        function<bool(int, int, int)> dfs;
+        dfs = [&](int i, int j, int d) {
+            if (maze[i][j] & (1 << d)) return false;
+            maze[i][j] |= 1 << d;
+
+            int ii = i + offsets[d - 1][0], jj = j + offsets[d - 1][1];
+            if (!hit_wall(ii, jj)) {
+                // Doesn't hit wall.
+                if (dfs(ii, jj, d)) return true;
+            } else {
+                // Hit wall
+                if (i == destination[0] && j == destination[1]) return true;
+                for (int dd = 1; dd <= 4; ++dd) {
+                    if (dd == d) continue;
+                    int ii = i + offsets[dd - 1][0], jj = j + offsets[dd - 1][1];
+                    if (!hit_wall(ii, jj)) {
+                        if (dfs(ii, jj, dd)) return true;
+                    }
+                }
+            }
+            return false;
+        };
+
+        for (int d = 1; d <= 4; ++d) {
+            if (dfs(start[0], start[1], d)) return true;
+        }
+
+        return false;
+    }
+};
