@@ -45,3 +45,49 @@ public:
         }
     }
 };
+
+//
+
+class Solution {
+public:
+    vector<vector<char>> updateBoard(vector<vector<char>>& board, vector<int>& click) {
+        const int m = board.size(), n = board[0].size();
+
+        function<void(int, int)> dfs;
+        dfs = [&](int i, int j) {
+            char& cur = board[i][j];
+            if (cur == 'M') {
+                cur = 'X';
+                return;
+            }
+            if (cur == 'B' || cur == 'X') {
+                return;
+            }
+            cur = 'B';
+            int mines = 0;
+            for (int k0 = -1; k0 <= 1; ++k0) {
+                for (int k1 = -1; k1 <=1; ++k1) {
+                    if (k0 == 0 && k1 == 0) continue;
+                    int ii = i + k0, jj = j + k1;
+                    if (ii < 0 || ii >= m || jj < 0 || jj >= n) continue;
+                    mines += board[ii][jj] == 'M';
+                }
+            }
+            if (mines) {
+                cur = mines + '0';
+                return;
+            }
+            for (int k0 = -1; k0 <= 1; ++k0) {
+                for (int k1 = -1; k1 <=1; ++k1) {
+                    if (k0 == 0 && k1 == 0) continue;
+                    int ii = i + k0, jj = j + k1;
+                    if (ii < 0 || ii >= m || jj < 0 || jj >= n) continue;
+                    dfs(ii, jj);
+                }
+            }
+        };
+        dfs(click[0], click[1]);
+
+        return board;
+    }
+};

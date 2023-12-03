@@ -31,3 +31,28 @@ public:
         return postOrder(root, 0).first;
     }
 };
+
+//
+
+class Solution {
+public:
+    TreeNode* subtreeWithAllDeepest(TreeNode* root) {
+        function<pair<TreeNode*, int>(TreeNode*, int)> dfs;
+        dfs = [&](TreeNode* node, int depth) -> pair<TreeNode*, int>{
+            if (!node) {
+                return {node, depth};
+            }
+            auto [ln, ld] = dfs(node->left, depth + 1);
+            auto [rn, rd] = dfs(node->right, depth + 1);
+            if (ld == rd) {
+                return {node, ld};
+            } else if (ld > rd) {
+                return {ln, ld};
+            } else {
+                return {rn, rd};
+            }
+        };
+        return dfs(root, 0).first;
+
+    }
+};
