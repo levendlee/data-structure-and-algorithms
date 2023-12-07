@@ -46,3 +46,80 @@ public:
         return cur_max_start3;
     }
 };
+
+//
+
+struct Subarray {
+    int i;
+    int j;
+    int k;
+    int sum;
+
+    Subarray(int sum = 0, int i = -1, int j = -1, int k = -1) : i(i), j(j), k(k), sum(sum) {}
+
+    bool operator>(const Subarray& sa) const {
+        return sum > sa.sum || sum == sa.sum && (i < sa.i || i == sa.i && (j < sa.j || j == sa.i && k < sa.k));
+    }
+};
+
+class Solution {
+public:
+    vector<int> maxSumOfThreeSubarrays(vector<int>& nums, int k) {
+        const int n = nums.size();
+
+        vector<int> sums(n + 1, 0);
+        for (int i = 0; i < n; ++i) {
+            sums[i + 1] = sums[i] + nums[i];
+        }
+
+        vector<vector<Subarray>> dp(3, vector<Subarray>(n));
+        for (int i = 0; i < n; ++i) {
+            // Update subarray boundle 3
+            // Not include
+            if (i >= 1) {
+                dp[2][i] = dp[2][i - 1];
+            }
+            // Include
+            if (i >= k){
+                auto nsa = dp[1][i - k];
+                nsa.k = i - k + 1;
+                nsa.sum += sums[i + 1] - sums[i + 1 - k];
+
+                if (nsa > dp[2][i]) {
+                    dp[2][i] = nsa;
+                }
+            }
+
+            // Update subarray boundle 2
+            // Not include
+            if (i >= 1) {
+                dp[1][i] = dp[1][i - 1];
+            }
+            // Include
+            if (i >= k){
+                auto nsa = dp[0][i - k];
+                nsa.j = i - k + 1;
+                nsa.sum += sums[i + 1] - sums[i + 1 - k];
+
+                if (nsa > dp[1][i]) {
+                    dp[1][i] = nsa;
+                }
+            }
+
+            // Update subarray boundle 0
+            // Not include
+            if (i >= 1) {
+                dp[0][i] = dp[0][i - 1];
+            }
+            // Include
+            if (i >= k - 1){
+                auto nsa = Subarray(sums[i + 1] - sums[i + 1 - k], i - k + 1);
+                if (nsa > dp[0][i]) {
+                    dp[0][i] = nsa;
+                }
+            }
+        }
+
+        return {dp[2][n - 1].i, dp[2][n - 1].j, dp[2][n - 1].k};
+    }
+};

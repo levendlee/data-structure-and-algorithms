@@ -40,3 +40,52 @@ public:
         return sum_cnts[S];
     }
 };
+
+//
+
+class Solution {
+public:
+    int findTargetSumWays(vector<int>& nums, int target) {
+        const int n = nums.size();
+
+        unordered_map<int, int> sum2cnt;
+        sum2cnt[0] = 1;
+
+        for (int i = 0; i < n; ++i) {
+            unordered_map<int, int> n_sum2cnt;
+            for (const auto [sum, cnt] : sum2cnt) {
+                n_sum2cnt[sum + nums[i]] += cnt;
+                n_sum2cnt[sum - nums[i]] += cnt;
+            }
+            sum2cnt = move(n_sum2cnt);
+        }
+
+        return sum2cnt[target];
+    }
+};
+
+//
+
+class Solution {
+public:
+    int findTargetSumWays(vector<int>& nums, int target) {
+        const int n = nums.size();
+        
+        int sum = accumulate(nums.begin(), nums.end(), 0);
+        if (sum < target) return 0;
+        if ((sum + target) & 0x1) return 0;
+
+        int s = (sum + target) / 2;
+        if (s < 0) return 0;
+
+        vector<int> dp(s + 1, 0);
+        dp[0] = 1;
+
+        for (int n : nums) {
+            for (int i = s; i >= n; --i) {
+                dp[i] += dp[i - n];
+            }
+        }
+        return dp[s];
+    }
+};

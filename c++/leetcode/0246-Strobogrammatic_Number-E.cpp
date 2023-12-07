@@ -18,3 +18,25 @@ public:
         return true;
     }
 };
+
+//
+
+class Solution {
+public:
+    bool isStrobogrammatic(string num) {
+        const int n = num.size();
+        int i = 0, j = n - 1;
+        while (i < n) {
+            char d0 = num[i], d1 = num[j];
+            if (d0 == d1 && (d0 == '0' || d0 == '1' || d0 == '8') ||
+                d0 == '6' && d1 == '9' ||
+                d0 == '9' && d1 == '6') {
+                ++i;
+                --j;
+                continue;
+            };
+            return false;
+        }
+        return true;
+    }
+};
