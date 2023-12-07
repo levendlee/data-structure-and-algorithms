@@ -55,3 +55,59 @@ public:
         return res;
     }
 };
+
+//
+
+class Solution {
+public:
+    vector<int> boundaryOfBinaryTree(TreeNode* root) {
+        if (!root) return {};
+
+        auto is_leaf = [](TreeNode* node) {
+            return !node->left && !node->right;
+        };
+
+        vector<int> res;
+        if (!is_leaf(root)) {
+            res.push_back(root->val);
+        }
+
+        // Left
+        TreeNode* node = root->left;
+        while (node && !is_leaf(node)) {
+            res.push_back(node->val);
+            if (node->left) {
+                node = node->left;
+            } else {
+                node = node->right;
+            }
+        }
+
+        // Leaves
+        function<void(TreeNode*)> dfs;
+        dfs = [&](TreeNode* node) {
+            if (!node) return;
+            if (!node->left && !node->right) {
+                res.push_back(node->val);
+            }
+            dfs(node->left);
+            dfs(node->right);
+        };
+        dfs(root);
+
+        // Right
+        int cur_size = res.size();
+        node = root->right;
+        while (node && !is_leaf(node)) {
+            res.push_back(node->val);
+            if (node->right) {
+                node = node->right;
+            } else {
+                node = node->left;
+            }
+        }
+        reverse(res.begin() + cur_size, res.end());
+
+        return res;
+    }
+};

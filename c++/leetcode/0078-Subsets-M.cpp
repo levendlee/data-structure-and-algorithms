@@ -20,3 +20,27 @@ public:
         return res;
     }
 };
+
+//
+
+class Solution {
+public:
+    vector<vector<int>> subsets(vector<int>& nums) {
+        vector<vector<int>> res;
+
+        const int n = nums.size();
+        function<void(int, vector<int>&)> backtracking;
+        backtracking = [&](int i, vector<int>& vec) {
+            res.push_back(vec);
+            for (int j = i; j < n; ++j) {
+                vec.push_back(nums[j]);
+                backtracking(j + 1, vec);
+                vec.pop_back();
+            }
+        };
+        vector<int> vec;
+        backtracking(0, vec);
+
+        return res;
+    }
+};
