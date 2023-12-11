@@ -31,3 +31,42 @@ public:
         return num * sign;
     }
 };
+
+//
+
+class Solution {
+public:
+    int myAtoi(string s) {
+        int n = s.size();
+
+        bool pos = true;
+        bool sign = false;
+        bool digit = false;
+        bool complete = false;
+        long long num = 0;
+        for (int i = 0; i < n; ++i) {
+            if (s[i] == ' ') {
+                if (sign || digit) break;
+            }
+            else if (s[i] == '+' || s[i] == '-') {
+                if (sign || digit) break;
+                pos = s[i] == '+';
+                sign = true;
+            }
+            else if (isdigit(s[i])) {
+                num = num * 10 + (s[i] - '0');
+                digit = true;
+            }
+            else {
+                break;
+            }
+            if (pos && num > INT_MAX) {
+                return INT_MAX;
+            }
+            else if (!pos && -num < INT_MIN) {
+                return INT_MIN;
+            }
+        }
+        return pos ? num : -num;
+    }
+};
