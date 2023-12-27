@@ -51,8 +51,48 @@ public:
     }
 };
 
-/**
- * Your NestedIterator object will be instantiated and called as such:
- * NestedIterator i(nestedList);
- * while (i.hasNext()) cout << i.next();
- */
+//
+
+class NestedIterator {
+public:
+    NestedIterator(vector<NestedInteger> &nestedList) {
+        nested_list_ = nestedList;
+        stk_.push({nested_list_, 0});
+        cleanUp();
+    }
+    
+    int next() {
+        auto& [list, index] = stk_.top();
+        int ret = list[index].getInteger();
+        index += 1;
+        cleanUp();
+        return ret;
+    }
+    
+    bool hasNext() {
+        return !stk_.empty();
+    }
+
+private:
+    void cleanUp() {
+        while (!stk_.empty()) {
+            auto [list, index] = stk_.top();
+            if (list.size() <= index) {
+                stk_.pop();
+                if (stk_.empty()) return;
+                stk_.top().second += 1;
+            } else if (!list[index].isInteger()) {
+                stk_.push({list[index].getList(), 0});
+            } else {
+              break;
+            }
+        }
+    }
+
+    void iterate() {
+
+    }
+
+    vector<NestedInteger> nested_list_;
+    stack<pair<vector<NestedInteger>&, int>> stk_;
+};
