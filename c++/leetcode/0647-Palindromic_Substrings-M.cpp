@@ -26,3 +26,45 @@ public:
         return cnt;
     }
 };
+
+//
+class Solution {
+public:
+    int countSubstrings(string s) {
+        const int n = s.size();
+        vector<vector<bool>> is_palindromic(n, vector<bool>(n, false));
+        for (int i = 0; i < n; ++i) {
+            is_palindromic[i][i] = true;
+        }
+        int num_palindromic_substrs = n;
+        for (int d = 2; d <= n; ++d) {
+            for (int i = 0; i + d <= n; ++i) {
+                int j = i + d - 1;
+                is_palindromic[i][j] = (s[i] == s[j]) && (d == 2 || is_palindromic[i+1][j-1]);
+                num_palindromic_substrs += is_palindromic[i][j];
+            }
+        }
+        return num_palindromic_substrs;
+    }
+};
+
+//
+class Solution {
+public:
+    int countSubstrings(string s) {
+        const int n = s.size();
+        int num_palindromic_substrs = 0;
+        for (int c = 0; c < n; ++c) {
+            ++num_palindromic_substrs;
+            // Odd number. As center.
+            for (int i = c - 1, j = c + 1; i >= 0 && j < n && s[i] == s[j]; --i, ++j) {
+                ++num_palindromic_substrs;
+            }
+            // Even number. As last one of previous half.
+            for (int i = c, j = c + 1; i >= 0 && j < n && s[i] == s[j]; --i, ++j) {
+                ++num_palindromic_substrs;
+            }
+        }
+        return num_palindromic_substrs;
+    }
+};
