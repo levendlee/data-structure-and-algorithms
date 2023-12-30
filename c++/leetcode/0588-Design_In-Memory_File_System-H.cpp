@@ -72,3 +72,74 @@ public:
         return node->content;
     }
 };
+
+//
+
+struct FSNode {
+    string name;
+    string content;
+    map<string, FSNode*> children;
+
+    FSNode(const string& name) : name(name) {};
+};
+
+vector<string> SplitPath(const string& path) {
+    vector<string> res;
+    int n = path.size();
+    int i = 0;
+    while (i < n) {
+        while (i < n && path[i] == '/') ++i;
+        int j = path.find('/', i);
+        if (j == string::npos) j = n;
+        if (j - i > 0) {
+            res.push_back(path.substr(i, j - i));
+        }
+        i = j + 1;
+    }
+    return res;
+}
+
+class FileSystem {
+public:
+    FileSystem() {
+        root_ = new FSNode("(root)");
+    }
+    
+    vector<string> ls(string path) {
+        FSNode* node = getNode(path);
+        if (!node->content.empty()) {
+            return {node->name};
+        }
+        vector<string> key_view;
+        for (const auto& [k, v] : node->children) {
+            key_view.push_back(k);
+        }
+        return key_view;
+    }
+    
+    void mkdir(string path) {
+        getNode(path);
+    }
+    
+    void addContentToFile(string filePath, string content) {
+        getNode(filePath)->content += content;
+    }
+    
+    string readContentFromFile(string filePath) {
+        return getNode(filePath)->content;
+    }
+
+private:
+    FSNode* getNode(string filePath) {
+        FSNode* node = root_;
+        for (const auto& substr: SplitPath(filePath)) {
+            if (!node->children[substr]) {
+                node->children[substr] = new FSNode(substr);
+            }
+            node = node->children[substr];
+        }
+        return node;
+    }
+
+    FSNode* root_;
+};

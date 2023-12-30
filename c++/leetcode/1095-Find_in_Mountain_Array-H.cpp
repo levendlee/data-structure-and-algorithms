@@ -63,3 +63,57 @@ public:
         return -1;
     }
 };
+
+//
+
+class Solution {
+public:
+    int findInMountainArray(int target, MountainArray &mountainArr) {
+        int n = mountainArr.length();
+        // Find peak
+        int lo = 1, hi = n - 2, peak = 0;
+        while (lo < hi) {
+            int mid = (lo + hi) / 2; // Close to lo
+            int v_pre = mountainArr.get(mid - 1);
+            int v_mid = mountainArr.get(mid);
+            int v_pos = mountainArr.get(mid + 1);
+            if (v_pre < v_mid && v_mid > v_pos) {
+                peak = mid;
+                break;
+            } else if (v_mid < v_pos) {
+                lo = mid + 1;
+            } else {
+                hi = mid - 1;
+            }
+        }
+        peak = peak ? peak : lo;
+
+        lo = 0, hi = peak;
+        while (lo <= hi) {
+            int mid = (lo + hi) / 2;
+            int v = mountainArr.get(mid);
+            if (v == target) {
+                return mid;
+            } else if (v > target) {
+                hi = mid - 1;
+            } else {
+                lo = mid + 1;
+            }
+        }
+
+        lo = peak + 1, hi = n - 1;
+        while (lo <= hi) {
+            int mid = (lo + hi) / 2;
+            int v = mountainArr.get(mid);
+            if (v == target) {
+                return mid;
+            } else if (v < target) {
+                hi = mid - 1;
+            } else {
+                lo = mid + 1;
+            }
+        }
+
+        return -1;
+    }
+};

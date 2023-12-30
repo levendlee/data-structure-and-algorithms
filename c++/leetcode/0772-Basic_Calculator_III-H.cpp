@@ -143,3 +143,68 @@ public:
         return nums.top();
     }
 };
+
+//
+class Solution {
+public:
+    int calculate(string s) {
+        const int n = s.size();
+
+        auto find_stop = [&](int i) {
+            int stk = 0;
+            do {
+                stk += s[i] == '(';
+                stk -= s[i] == ')';
+                ++i;
+            } while (stk);
+            return i - 1;
+        };
+
+        function<int(int,int)> eval;
+
+        auto read_num = [&](int i) -> pair<int, int> {
+            if (s[i] == '(') {
+                int j = find_stop(i);
+                int num = eval(i + 1, j - 1);
+                return {num, j + 1};
+            }
+            int j = i;
+            while (j + 1 < n && isdigit(s[j + 1])) {
+                ++j;
+            }
+            return {stoi(s.substr(i, j - i + 1)), j + 1};
+        };
+
+        eval = [&](int start, int end) {
+            stack<int> parts;
+            int i = start;
+            while (i <= end) {
+                if (s[i] == '+' || s[i] == '-') {
+                    auto [num, j] = read_num(i + 1);
+                    parts.push(s[i] == '+' ? num : -num);
+                    i = j;
+                } else if (s[i] == '*' || s[i] == '/') {
+                    auto [num, j] = read_num(i + 1);
+                    if (s[i] == '*') {
+                        parts.top() *= num;
+                    } else {
+                        parts.top() /= num;
+                    }
+                    i = j;
+                } else {
+                    auto [num, j] = read_num(i);
+                    parts.push(num);
+                    i = j;
+                }
+            }
+            int sum = 0;
+            while(!parts.empty()) {
+                sum += parts.top();
+                parts.pop();
+            }
+            return sum;
+        };
+
+        return eval(0, s.size() - 1);
+    }
+};

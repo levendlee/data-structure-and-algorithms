@@ -55,3 +55,49 @@ public:
         return -1;
     }
 };
+
+//
+
+class Solution {
+public:
+    int numBusesToDestination(vector<vector<int>>& routes, int source, int target) {
+        if (source == target) return 0;
+
+        unordered_map<int, vector<int>> station2routes;
+        for (int i = 0; i < routes.size(); ++i) {
+            for (int station: routes[i]) {
+                station2routes[station].push_back(i);
+            }
+        }
+
+        unordered_set<int> visited_station;
+        visited_station.insert(source);
+        unordered_set<int> visited_route;
+    
+        queue<int> bfs;
+        bfs.push(source);
+
+        int stops = 0;
+        while (!bfs.empty()) {
+            ++stops;
+            int search_size = bfs.size();
+            for (int i = 0; i < search_size; ++i) {
+                int station = bfs.front();
+                bfs.pop();
+
+                for (int r: station2routes[station]) {
+                    if (visited_route.count(r)) continue;
+                    visited_route.insert(r);
+                    for (int s: routes[r]) {
+                        if (s == target) return stops;
+                        if (visited_station.count(s)) continue;
+                        visited_station.insert(s);
+                        bfs.push(s);
+                    }
+                }
+            }
+        }
+
+        return -1;
+    }
+};
