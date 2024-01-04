@@ -48,3 +48,21 @@ public:
         return time;
     }
 };
+
+//
+
+class Solution {
+public:
+    int leastInterval(vector<char>& tasks, int n) {
+        int max_count = 0;
+        int task_count[26] = {0};
+        for (char t : tasks) {
+            max_count = max(max_count, ++task_count[t - 'A']);
+        }
+        int cycles = (max_count - 1) * (n + 1);
+        for (int cnt : task_count) {
+            if (cnt == max_count) ++cycles;
+        }
+        return max(static_cast<int>(tasks.size()), cycles);
+    }
+};

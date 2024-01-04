@@ -103,3 +103,43 @@ public:
         return mergeSkyline(buildings, 0, buildings.size() - 1);
     }
 };
+
+//
+
+class Solution {
+public:
+    vector<vector<int>> getSkyline(vector<vector<int>>& buildings) {
+        unordered_set<int> indices_set;
+        for (const auto& b : buildings) {
+            indices_set.insert(b[0]);
+            indices_set.insert(b[1]);
+        }
+
+        vector<int> indices(indices_set.begin(), indices_set.end());
+        sort(indices.begin(), indices.end());
+
+        vector<vector<int>> res;
+        priority_queue<vector<int>> pq;
+
+        const int m = indices.size();
+        const int n = buildings.size();
+        int i = 0, j = 0;
+        while (i < m) {
+            // Push new ones.
+            while (j < n && buildings[j][0] <= indices[i]) {
+                pq.push({buildings[j][2], buildings[j][1]});
+                ++j;
+            }
+            // Pop invalid ones.
+            while (!pq.empty() && pq.top()[1] <= indices[i]) {
+                pq.pop();
+            }
+            int height = pq.empty() ? 0 : pq.top()[0];
+            if (res.empty() || res.back()[1] != height) {
+                res.push_back({indices[i], height});
+            }
+            ++i;
+        }
+        return res;
+    }
+};
