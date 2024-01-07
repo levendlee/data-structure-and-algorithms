@@ -31,3 +31,30 @@ public:
     }
 };
 
+//
+
+class HitCounter {
+public:
+    HitCounter() {
+        
+    }
+    
+    void hit(int timestamp) {
+        update(timestamp);
+        timestamp_queue_.push(timestamp);
+    }
+    
+    int getHits(int timestamp) {
+        update(timestamp);
+        return timestamp_queue_.size();
+    }
+private:
+    void update(int timestamp) {
+        while (!timestamp_queue_.empty() && timestamp_queue_.front() <= timestamp - 300) {
+            timestamp_queue_.pop();
+        }
+    }
+
+    queue<int> timestamp_queue_;
+};
+

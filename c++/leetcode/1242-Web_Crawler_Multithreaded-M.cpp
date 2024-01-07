@@ -72,3 +72,95 @@ public:
         return vector<string>(tbl_.begin(), tbl_.end());
     }
 };
+
+//
+
+class Solution {
+public:
+    vector<string> crawl(string startUrl, HtmlParser htmlParser) {
+        // constexpr char prefix[] = "http://";
+        constexpr int prefix_size = 7;
+
+        int sep = startUrl.find('/', prefix_size);
+        if (sep == string::npos) sep = startUrl.size();
+        string hostName = startUrl.substr(0, sep);
+
+        unordered_set<string> url_set;
+        url_set.insert(startUrl);
+        
+        queue<string> bfs;
+        bfs.push(startUrl);
+
+        mutex mtx;
+        function<void(string)> query;
+        query = [&](string url) {
+            auto new_urls = htmlParser.getUrls(url);
+            lock_guard<mutex> lock(mtx);
+            for (const auto& u : new_urls) {
+                if (u.substr(0, hostName.size()) != hostName) continue;
+                if (url_set.count(u)) continue;
+                url_set.insert(u);
+                bfs.push(u);
+            }
+        };
+
+        while (!bfs.empty()) {
+            int search_space = bfs.size();
+            vector<thread> threads(search_space);
+            for (int i = 0; i < search_space; ++i) {
+                string url = bfs.front();
+                bfs.pop();
+                threads[i] = thread(query, url);
+            }
+            for (int i = 0; i < search_space; ++i) {
+                threads[i].join();
+            }
+        }
+
+        return vector<string>(url_set.begin(), url_set.end());
+    }
+};
+
+//
+// std::async runs slower than naive std::thread. Condition variable is still
+// the best
+class Solution {
+public:
+    vector<string> crawl(string startUrl, HtmlParser htmlParser) {
+        // constexpr char prefix[] = "http://";
+        constexpr int prefix_size = 7;
+
+        int sep = startUrl.find('/', prefix_size);
+        if (sep == string::npos) sep = startUrl.size();
+        string hostName = startUrl.substr(0, sep);
+
+        unordered_set<string> url_set;
+        url_set.insert(startUrl);
+
+        mutex mtx;
+        function<vector<string>(string)> query;
+        query = [&](string url) {
+            auto new_urls = htmlParser.getUrls(url);
+            vector<string> res;
+            lock_guard<mutex> lock(mtx);
+            for (const auto& u : new_urls) {
+                if (u.substr(0, hostName.size()) != hostName || url_set.count(u)) continue;
+                url_set.insert(u);
+                res.push_back(u);
+            }
+            return res;
+        };
+
+        queue<future<vector<string>>> bfs;
+        bfs.push(async(launch::async, query, startUrl));
+        while (!bfs.empty()) {
+            auto new_urls = bfs.front().get();
+            bfs.pop();
+            for (const auto& url : new_urls) {
+                bfs.push(async(launch::async, query, url));
+            }
+        }
+
+        return vector<string>(url_set.begin(), url_set.end());
+    }
+};

@@ -42,3 +42,39 @@ public:
         hashmap_[playerId] = 0;
     }
 };
+
+//
+
+class Leaderboard {
+public:
+    Leaderboard() {
+        
+    }
+    
+    void addScore(int playerId, int score) {
+        auto iter = hashmap_.find(playerId);
+        if (iter != hashmap_.end()) {
+            tree_.erase({hashmap_[playerId], playerId});
+        }
+        hashmap_[playerId] += score;
+        tree_.insert({hashmap_[playerId], playerId});
+    }
+    
+    int top(int K) {
+        int sum = 0;
+        auto iter = tree_.rbegin();
+        for (int k = 0; k < K; ++k, ++iter) {
+            sum += iter->first;
+        }
+        return sum;
+    }
+    
+    void reset(int playerId) {
+        tree_.erase({hashmap_[playerId], playerId});
+        hashmap_.erase(playerId);
+    }
+
+private:
+    unordered_map<int, int> hashmap_;
+    set<pair<int, int>> tree_;
+};
