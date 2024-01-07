@@ -25,3 +25,23 @@ public:
         return len;
     }
 };
+
+//
+
+class Solution {
+public:
+    int characterReplacement(string s, int k) {
+        const int n = s.size();
+        int i = 0, j = 0, max_len = 0;
+        int count[26] = {0};
+        while (j < n) {
+            ++count[s[j] - 'A'];
+            while ((j - i + 1) - *std::max_element(count, count + 26) > k) {
+                --count[s[i++] - 'A'];
+            }
+            max_len = max(max_len, (j - i + 1));
+            ++j;
+        }
+        return max_len;
+    }
+};

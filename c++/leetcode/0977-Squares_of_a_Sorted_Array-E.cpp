@@ -30,3 +30,25 @@ public:
         return res;
     }
 };
+
+//
+
+class Solution {
+public:
+    vector<int> sortedSquares(vector<int>& nums) {
+        const int n = nums.size();
+        int j = lower_bound(nums.begin(), nums.end(), 0) - nums.begin();
+        int i = j - 1;
+        vector<int> res;
+        while (i >= 0 || j < n) {
+            if (i < 0 || j < n && (nums[j] < -nums[i])) {
+                res.push_back(nums[j] * nums[j]);
+                ++j;
+            } else {
+                res.push_back(nums[i] * nums[i]);
+                --i;
+            }
+        }
+        return res;
+    }
+};

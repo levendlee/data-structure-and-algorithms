@@ -67,3 +67,65 @@ public:
         return output.substr(lstrip);
     }
 };
+
+//
+
+class Solution {
+public:
+    string multiply(string num1, string num2) {
+        auto muln1 = [](const std::string& a, char b) -> std::string {
+            std::string s;
+            int carry = 0;
+            for (int i = 0; i < a.size(); ++i) {
+                int num = (a[i] - '0') * (b - '0') + carry;
+                s += ('0' + num % 10);
+                carry = num / 10;
+            }
+            if (carry) {
+                s += ('0' + carry);
+            }
+            return s;
+        };
+        auto addnn = [](const std::string& a, const std::string& b) -> std::string {
+            std::string s;
+            const int m = a.size(), n = b.size();
+            int i = 0, carry = 0;
+            while (i < max(m, n)) {
+                int sum;
+                if (i < m && i < n) {
+                    sum = (a[i] - '0') + (b[i] - '0');
+                } else if (i < m) {
+                    sum = (a[i] - '0');
+                } else {
+                    sum = (b[i] - '0');
+                }
+                sum += carry;
+                s += '0' + sum % 10;
+                carry = sum / 10;
+                ++i;
+            }
+            if (carry) {
+                s += '0' + carry;
+            }
+            return s;
+        };
+        auto mulnn = [&](const std::string& a, const std::string& b) -> std::string {
+            const int m = a.size(), n = b.size();
+            string s;
+            for (int i = 0; i < n; ++i) {
+                auto temp = muln1(a, b[i]);
+                temp = std::string(i, '0') + temp;
+                s = addnn(s, temp);
+            }
+            int valid_size = s.size();
+            while (valid_size > 1 && s[valid_size - 1] == '0') --valid_size;
+            s.resize(valid_size);
+            return s;
+        };
+        reverse(num1.begin(), num1.end());
+        reverse(num2.begin(), num2.end());
+        auto res = mulnn(num1, num2);
+        reverse(res.begin(), res.end());
+        return res;
+    }
+};
