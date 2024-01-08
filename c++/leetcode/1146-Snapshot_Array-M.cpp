@@ -70,3 +70,38 @@ public:
         }
     }
 };
+
+//
+
+class SnapshotArray {
+public:
+    SnapshotArray(int length) : snap_id_(0), arr_(length) {
+        
+    }
+    
+    void set(int index, int val) {
+        auto& history = arr_[index];
+        if (!history.empty() && history.back().first == snap_id_) {
+            history.back().second = val;
+        } else {
+            history.push_back({snap_id_, val});
+        }
+    }
+    
+    int snap() {
+        return snap_id_++;
+    }
+    
+    int get(int index, int snap_id) {
+        auto& history = arr_[index];
+        auto iter = upper_bound(history.begin(), history.end(), make_pair(snap_id, INT_MAX));
+        if (iter == history.begin()) {
+            return 0;
+        }
+        return (--iter)->second;
+    }
+
+private:
+    int snap_id_;
+    vector<vector<pair<int, int>>> arr_;
+};
