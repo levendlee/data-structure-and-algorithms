@@ -75,3 +75,82 @@ public:
 // Your Codec object will be instantiated and called as such:
 // Codec codec;
 // codec.deserialize(codec.serialize(root));
+
+//
+
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    vector<Node*> children;
+
+    Node() {}
+
+    Node(int _val) {
+        val = _val;
+    }
+
+    Node(int _val, vector<Node*> _children) {
+        val = _val;
+        children = _children;
+    }
+};
+*/
+
+class Codec {
+public:
+    // Encodes a tree to a single string.
+    string serialize(Node* root) {
+        string s;
+        function<void(Node*)> dfs;
+        dfs = [&](Node* node) {
+            if (!node) {
+                s += '$';
+                return;
+            }
+            s += to_string(node->val);
+            s += '#';
+            for (const auto& child : node->children) {
+                dfs(child);
+            }
+            s += '$';
+            return;
+        };
+        dfs(root);
+        return s;
+    }
+	
+    // Decodes your encoded data to tree.
+    Node* deserialize(string data) {
+        const int n = data.size();
+        int i = 0;
+
+        Node* root = nullptr;
+        function<Node*()> dfs;
+        dfs = [&]() -> Node* {
+            if (data[i] == '$') {
+                ++i;
+                return nullptr;
+            }
+            
+            int j = i;
+            while (isdigit(data[j])) ++j;
+            int val = stoi(data.substr(i, j - i));
+            i = j + 1;
+
+            Node* node = new Node(val);
+            while (i < n && data[i] != '$') {
+                node->children.push_back(dfs());
+            }
+            ++i;
+            return node;
+        };
+
+        return dfs();
+    }
+};
+
+// Your Codec object will be instantiated and called as such:
+// Codec codec;
+// codec.deserialize(codec.serialize(root));
