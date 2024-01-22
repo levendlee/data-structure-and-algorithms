@@ -51,3 +51,54 @@ public:
         return preprocessed;
     }
 };
+
+//
+
+class Solution {
+public:
+    vector<string> removeComments(vector<string>& source) {
+        vector<string> outputs;
+        string buffer;
+
+        auto flush_buffer = [&]() {
+            if (!buffer.empty()) {
+                outputs.push_back(std::move(buffer));
+                buffer = "";
+            }
+        };
+
+        bool block_commented = false;
+        for (const auto& s : source) {
+            const int n = s.size();
+            int i = 0;
+            while (i < n) {
+                if (!block_commented) {
+                    if (s[i] == '/') {
+                        if (i + 1 < n && s[i + 1] == '/') {
+                            flush_buffer();
+                            break;
+                        }
+                        if (i + 1 < n && s[i + 1] == '*') {
+                            block_commented = true;
+                            i += 2;
+                            continue;
+                        }
+                    }
+                    buffer.push_back(s[i]);
+                    ++i;
+                } else {
+                    if (s[i] == '*' && i + 1 < n && s[i + 1] == '/') {
+                        block_commented = false;
+                        i += 2;
+                        continue;
+                    }
+                    ++i;
+                }
+            }
+            if (!block_commented) {
+                flush_buffer();
+            }
+        }
+        return outputs;
+    }
+};
