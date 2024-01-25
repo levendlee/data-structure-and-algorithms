@@ -70,3 +70,50 @@ public:
         return res;
     }
 };
+
+//
+
+class Solution {
+public:
+    string countOfAtoms(string formula) {
+        stack<map<string, int>> stk;
+        stk.push({});
+
+        int n = formula.size();
+        int i = 0;
+        while (i < n) {
+            if (isalpha(formula[i])) {
+                int j = i + 1;
+                while (j < n && isalpha(formula[j]) && islower(formula[j])) ++j;
+                string name = formula.substr(i, j - i);
+                i = j;
+
+                while (j < n && isdigit(formula[j])) ++j;
+                int count = i == j ? 1 : stoi(formula.substr(i, j - i));
+                i = j;
+
+                stk.top()[name] += count;
+            } else if (formula[i] == '(') {
+                stk.push({});
+                ++i;
+            } else if (formula[i] == ')') {
+                int j = ++i;
+                while (j < n && isdigit(formula[j])) ++j;
+                int times = i == j ? 1 : stoi(formula.substr(i, j - i));
+                i = j;
+
+                auto count_map = stk.top();
+                stk.pop();
+                for (const auto& [name, cnt] : count_map) {
+                    stk.top()[name] += cnt * times;
+                }
+            }
+        }
+
+        string res;
+        for (const auto& [name, cnt] : stk.top()) {
+            res += name + (cnt == 1 ? "" : to_string(cnt));
+        }
+        return res;
+    }
+};

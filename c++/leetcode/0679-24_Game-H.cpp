@@ -72,3 +72,56 @@ public:
         return getPermutations(nums, cur, visit);
     }
 };
+
+//
+
+class Solution {
+public:
+    bool judgePoint24(vector<int>& cards) {
+        auto run_one_op = [](double a, double b) {
+            vector<double> res = {a + b, a - b, b - a, a * b};
+            if (a != 0) res.push_back(b / a);
+            if (b != 0) res.push_back(a / b);
+            return res;
+        };
+
+        function<bool(const vector<double>& nums)> search;
+        search = [&](const vector<double>& nums) {
+            if (nums.size() == 3) {
+                for (auto n : nums) {
+                    cout << n << ", ";
+                }
+                cout << "\n";
+            }
+            
+            if (nums.size() == 1) {
+                return abs(nums[0] - 24.0) < 1e-1;
+            }
+            int n = nums.size();
+            for (int i = 0; i < n; ++i) {
+                for (int j = i + 1; j < n; ++j) {
+                    auto new_nums = run_one_op(nums[i], nums[j]);
+                    vector<double> next_nums;
+                    for (int k = 0; k < n; ++k) {
+                        if (i == k || j == k) continue;
+                        next_nums.push_back(nums[k]);
+                    }
+                    for (double ret : new_nums) {
+                        next_nums.push_back(ret);
+                        if (search(next_nums)) {
+                            return true;
+                        }
+                        next_nums.pop_back();
+                    }
+                }
+            }
+            return false;
+        };
+
+        vector<double> dcards;
+        for (int num : cards) {
+            dcards.push_back(static_cast<double>(num));
+        }
+        return search(dcards);
+    }
+};

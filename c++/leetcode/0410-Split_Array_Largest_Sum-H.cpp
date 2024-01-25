@@ -32,3 +32,34 @@ public:
         return res;
     }
 };
+
+//
+
+class Solution {
+public:
+    int splitArray(vector<int>& nums, int k) {
+        int lo = *max_element(nums.begin(), nums.end());
+        int hi = accumulate(nums.begin(), nums.end(), 0);
+
+        while (lo < hi) {
+            int mid = (lo + hi) / 2;
+            int sum = 0, splits = 0;
+            for (int n : nums) {
+                if (sum + n > mid) {
+                    ++splits;
+                    sum = n;
+                } else {
+                    sum += n;
+                }
+            }
+            splits += sum > 0;
+            if (splits > k) {
+                lo = mid + 1;
+            } else {
+                hi = mid;
+            }
+        }
+
+        return lo;
+    }
+};
