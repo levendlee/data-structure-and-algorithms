@@ -67,3 +67,68 @@ public:
         }
     }
 };
+
+//
+
+class MyHashMap {
+public:
+    MyHashMap() {
+        addr_bits_ = 8;
+        storage_.resize(1 << addr_bits_);
+    }
+    
+    void put(int key, int value) {
+        int hash_key = hash(key);
+        auto& array = storage_[hash_key];
+        for (auto& p : array) {
+            if (p.first == key) {
+                p.second = value;
+                return;
+            }
+        }
+        array.push_back({key, value});
+    }
+    
+    int get(int key) {
+        int hash_key = hash(key);
+        auto& array = storage_[hash_key];
+        for (auto& p : array) {
+            if (p.first == key) {
+                return p.second;
+            }
+        }
+        return -1;
+    }
+    
+    void remove(int key) {
+        int hash_key = hash(key);
+        auto& array = storage_[hash_key];
+        for (int i = 0; i < array.size(); ++i) {
+            if (array[i].first == key) {
+                swap(array[i], array.back());
+                array.pop_back();
+                return;
+            }
+        }
+    }
+
+private:
+    int hash(int key) {
+        int hashed = 0;
+        for (int shift = 0; shift < 32; shift += addr_bits_) {
+            hashed ^= (key >> shift) & ((1 << addr_bits_) - 1);
+        }
+        return hashed;
+    }
+
+    int addr_bits_;
+    vector<vector<pair<int, int>>> storage_;
+};
+
+/**
+ * Your MyHashMap object will be instantiated and called as such:
+ * MyHashMap* obj = new MyHashMap();
+ * obj->put(key,value);
+ * int param_2 = obj->get(key);
+ * obj->remove(key);
+ */
