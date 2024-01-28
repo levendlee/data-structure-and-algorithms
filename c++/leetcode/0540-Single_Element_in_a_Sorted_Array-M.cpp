@@ -28,3 +28,27 @@ public:
         return nums[lo];
     }
 };
+
+//
+
+class Solution {
+public:
+    int singleNonDuplicate(vector<int>& nums) {
+        int n = nums.size();
+        int lo = 0, hi = n - 1;
+        while (lo < hi) {
+            int mid = (lo + hi) / 2;
+            bool left_match = mid > 0 && nums[mid - 1] == nums[mid];
+            bool right_match = mid < n - 1 && nums[mid + 1] == nums[mid];
+            if (!left_match && !right_match) {
+                return nums[mid];
+            }
+            if (left_match && mid & 0x1 || right_match && !(mid & 0x1)) {
+                lo = mid + 1;
+            } else {
+                hi = mid - 1;
+            }
+        }
+        return nums[lo];
+    }
+};
