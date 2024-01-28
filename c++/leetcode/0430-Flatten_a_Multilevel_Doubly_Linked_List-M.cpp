@@ -49,3 +49,52 @@ public:
         return head;
     }
 };
+
+//
+
+/*
+// Definition for a Node.
+class Node {
+public:
+    int val;
+    Node* prev;
+    Node* next;
+    Node* child;
+};
+*/
+
+class Solution {
+public:
+    Node* flatten(Node* head) {
+        function<Node*(Node*)> flatten_helper;
+        flatten_helper = [&](Node* head) {
+            Node* node = head;
+            Node* prev = node;
+            while (node) {
+                if (node->child) {
+                    Node* flatten_head = node->child;
+                    Node* flatten_tail = flatten_helper(node->child);
+                    Node* next = node->next;
+                    
+                    node->next = flatten_head;
+                    flatten_head->prev = node;
+
+                    flatten_tail->next = next;
+                    if (next) {
+                        next->prev = flatten_tail;
+                    }
+
+                    node->child = nullptr;
+                    prev = flatten_tail;
+                    node = next;
+                } else {
+                    prev = node;
+                    node = node->next;
+                }
+            }
+            return prev;
+        };
+        flatten_helper(head);
+        return head;
+    }
+};
