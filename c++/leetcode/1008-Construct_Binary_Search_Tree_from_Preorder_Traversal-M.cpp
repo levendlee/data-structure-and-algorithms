@@ -30,3 +30,39 @@ public:
         return preOrder(preorder, i, INT_MIN, INT_MAX);
     }
 };
+
+//
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* bstFromPreorder(vector<int>& preorder) {
+        const int n = preorder.size();
+        int i = 0;
+
+        function<TreeNode*(int64_t, int64_t)> preorder_builder;
+        preorder_builder = [&](int64_t lo, int64_t hi) {
+            int64_t mid = preorder[i++];
+            TreeNode* node = new TreeNode(mid);
+            if (i < n && lo < preorder[i] && preorder[i] < mid) {
+                node->left = preorder_builder(lo, mid);
+            }
+            if (i < n && mid < preorder[i] && preorder[i] < hi) {
+                node->right = preorder_builder(mid, hi);
+            }
+            return node;
+        };
+
+        return preorder_builder(int64_t(INT_MIN) - 1, int64_t(INT_MAX) + 1);
+    }
+};
