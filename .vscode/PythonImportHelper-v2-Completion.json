@@ -1,0 +1,585 @@
+[
+    {
+        "label": "typing",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "typing",
+        "description": "typing",
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "List",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "heappush",
+        "importPath": "heapq",
+        "description": "heapq",
+        "isExtraImport": true,
+        "detail": "heapq",
+        "documentation": {}
+    },
+    {
+        "label": "heappop",
+        "importPath": "heapq",
+        "description": "heapq",
+        "isExtraImport": true,
+        "detail": "heapq",
+        "documentation": {}
+    },
+    {
+        "label": "heappop",
+        "importPath": "heapq",
+        "description": "heapq",
+        "isExtraImport": true,
+        "detail": "heapq",
+        "documentation": {}
+    },
+    {
+        "label": "heappush",
+        "importPath": "heapq",
+        "description": "heapq",
+        "isExtraImport": true,
+        "detail": "heapq",
+        "documentation": {}
+    },
+    {
+        "label": "bisect",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "bisect",
+        "description": "bisect",
+        "detail": "bisect",
+        "documentation": {}
+    },
+    {
+        "label": "collections",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "collections",
+        "description": "collections",
+        "detail": "collections",
+        "documentation": {}
+    },
+    {
+        "label": "unittest",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "unittest",
+        "description": "unittest",
+        "detail": "unittest",
+        "documentation": {}
+    },
+    {
+        "label": "argparse",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "argparse",
+        "description": "argparse",
+        "detail": "argparse",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "re",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "re",
+        "description": "re",
+        "detail": "re",
+        "documentation": {}
+    },
+    {
+        "label": "datetime",
+        "importPath": "datetime",
+        "description": "datetime",
+        "isExtraImport": true,
+        "detail": "datetime",
+        "documentation": {}
+    },
+    {
+        "label": "BeautifulSoup",
+        "importPath": "bs4",
+        "description": "bs4",
+        "isExtraImport": true,
+        "detail": "bs4",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 6,
+        "importPath": "python.leetcode.0205-Isomorphic_Strings-E",
+        "description": "python.leetcode.0205-Isomorphic_Strings-E",
+        "peekOfCode": "class Solution:\n    def isIsomorphic(self, s: str, t: str) -> bool:\n        s_to_t = {}\n        t_to_s = {}\n        for cs, ct in zip(s, t):\n            if s_to_t.get(cs, ct) != ct or t_to_s.get(ct, cs) != cs:\n                return False\n            s_to_t[cs] = ct\n            t_to_s[ct] = cs\n        return True",
+        "detail": "python.leetcode.0205-Isomorphic_Strings-E",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 6,
+        "importPath": "python.leetcode.0215-Kth_Largest_Element_in_Array-M",
+        "description": "python.leetcode.0215-Kth_Largest_Element_in_Array-M",
+        "peekOfCode": "class Solution:\n    def findKthLargest(self, nums: List[int], k: int) -> int:\n        '''\n        heap = []\n        for n in nums:\n            heapq.heappush(heap, n)\n            while len(heap) > k:\n                heapq.heappop(heap)\n        kth = heapq.heappop(heap)\n        return kth",
+        "detail": "python.leetcode.0215-Kth_Largest_Element_in_Array-M",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 6,
+        "importPath": "python.leetcode.0314-Binary_Tree_Vertical_Order_Traversal-M",
+        "description": "python.leetcode.0314-Binary_Tree_Vertical_Order_Traversal-M",
+        "peekOfCode": "class Solution:\n    def verticalOrder(self, root: Optional[TreeNode]) -> List[List[int]]:\n        if not root:\n            return {}\n        columns = collections.defaultdict(list)\n        q = collections.deque()\n        q.append((root, 0))\n        while q:\n            node, j = q.popleft()\n            columns[j].append(node.val)",
+        "detail": "python.leetcode.0314-Binary_Tree_Vertical_Order_Traversal-M",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 6,
+        "importPath": "python.leetcode.0339-Nested_List_Weight_Sum-M",
+        "description": "python.leetcode.0339-Nested_List_Weight_Sum-M",
+        "peekOfCode": "class Solution:\n    def depthSum(self, nestedList: List[NestedInteger]) -> int:\n        def fn(nl, depth):\n            if nl.isInteger():\n                return nl.getInteger() * depth\n            return sum(fn(elem, depth + 1) for elem in nl.getList())\n        return sum(fn(elem, 1) for elem in nestedList)",
+        "detail": "python.leetcode.0339-Nested_List_Weight_Sum-M",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 6,
+        "importPath": "python.leetcode.0408-Valid_Word_Abbreviation-E",
+        "description": "python.leetcode.0408-Valid_Word_Abbreviation-E",
+        "peekOfCode": "class Solution:\n    def validWordAbbreviation(self, word: str, abbr: str) -> bool:\n        m = len(word)\n        n = len(abbr)\n        i = 0\n        j = 0\n        while i < m and j < n:\n            if abbr[j].isalpha():\n                if word[i] != abbr[j]:\n                    return False",
+        "detail": "python.leetcode.0408-Valid_Word_Abbreviation-E",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 6,
+        "importPath": "python.leetcode.0843-Guess_the_Word-H",
+        "description": "python.leetcode.0843-Guess_the_Word-H",
+        "peekOfCode": "class Solution:\n    def findSecretWord(self, word_list: List[str], master: 'Master') -> None:\n        def calcMatch(word0: str, word1: str) -> int:\n            return sum(char0 == char1 for char0, char1 in zip(word0, word1))\n        for test in range(10):\n            n = len(word_list)\n            match_matrix = [[0 for j in range(n)] for i in range(n)]\n            for i in range(n):\n                for j in range(i, n):\n                    match = calcMatch(word_list[i], word_list[j])",
+        "detail": "python.leetcode.0843-Guess_the_Word-H",
+        "documentation": {}
+    },
+    {
+        "label": "Solutio",
+        "kind": 6,
+        "importPath": "python.leetcode.0953-Verifying_an_Alien_Dictionary-E",
+        "description": "python.leetcode.0953-Verifying_an_Alien_Dictionary-E",
+        "peekOfCode": "class Solution {\npublic:\n    bool isAlienSorted(vector<string>& words, string order) {\n        int order_idx[26];\n        for (int i = 0; i < 26; ++i) {\n            order_idx[order[i] - 'a'] = i; \n        }\n        int n = words.size();\n        for (int i = 0; i < n - 1; ++i) {\n            bool matched = true;",
+        "detail": "python.leetcode.0953-Verifying_an_Alien_Dictionary-E",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 6,
+        "importPath": "python.leetcode.1007-Minimum_Domino_Rotations_For_Equal_Row-M",
+        "description": "python.leetcode.1007-Minimum_Domino_Rotations_For_Equal_Row-M",
+        "peekOfCode": "class Solution:\n    def minDominoRotations(self, A: List[int], B: List[int]) -> int:\n        n = len(A)\n        counter = [0 for i in range(6)]\n        for i in range(n):\n            counter[A[i] - 1] += 1\n            if A[i] == B[i]:\n                continue\n            counter[B[i] - 1] += 1\n        candidates = set(idx for idx, cnt in enumerate(counter) if cnt == n)",
+        "detail": "python.leetcode.1007-Minimum_Domino_Rotations_For_Equal_Row-M",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 6,
+        "importPath": "python.leetcode.1057-Campus_Bikes-M",
+        "description": "python.leetcode.1057-Campus_Bikes-M",
+        "peekOfCode": "class Solution:\n    # Time:  O( mnlog(n) )\n    # Space: O( mn )\n    def assignBikes(self, workers: List[List[int]], bikes: List[List[int]]) -> List[int]:\n        m, n = len(workers), len(bikes)\n        def dist(i: int, j: int) -> int:\n            return abs(workers[i][0] - bikes[j][0]) + abs(workers[i][1] - bikes[j][1])\n        # m * n log(n)\n        heaps = [sorted((dist(i, j), j) for j in range(n)) for i in range(m)]\n        match = [-1 for _ in range(m)]",
+        "detail": "python.leetcode.1057-Campus_Bikes-M",
+        "documentation": {}
+    },
+    {
+        "label": "BFSSolution",
+        "kind": 6,
+        "importPath": "python.leetcode.1066-Campus_Bikes_II-M",
+        "description": "python.leetcode.1066-Campus_Bikes_II-M",
+        "peekOfCode": "class BFSSolution:\n    # BFS\n    def assignBikes(self, workers: List[List[int]],\n                    bikes: List[List[int]]) -> int:\n        m, n = len(workers), len(bikes)\n        dist = [[abs(workers[i][0] - bikes[j][0]) + abs(workers[i][1] - bikes[j][1])\n                 for j in range(n)] for i in range(m)]\n        heap = [(0, 0, 0)]\n        seen = set()\n        while heap:",
+        "detail": "python.leetcode.1066-Campus_Bikes_II-M",
+        "documentation": {}
+    },
+    {
+        "label": "DFSSolution",
+        "kind": 6,
+        "importPath": "python.leetcode.1066-Campus_Bikes_II-M",
+        "description": "python.leetcode.1066-Campus_Bikes_II-M",
+        "peekOfCode": "class DFSSolution:\n    # DFS\n    def assignBikes(self, workers: List[List[int]], bikes: List[List[int]]) -> int:\n        m, n = len(workers), len(bikes)\n        dist = [[abs(workers[i][0] - bikes[j][0]) + abs(workers[i][1] - bikes[j][1])\n                 for j in range(n)] for i in range(m)]\n        dp = [[0 for _ in range(1 << n)]]\n        dp.extend([[float('inf') for _ in range(1 << n)] for _ in range(m)])\n        for i in range(m):\n            for s in range(1 << n):",
+        "detail": "python.leetcode.1066-Campus_Bikes_II-M",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 6,
+        "importPath": "python.leetcode.1170-Compare_Strings_by_Frequency_of_the_Smallest_Character-E",
+        "description": "python.leetcode.1170-Compare_Strings_by_Frequency_of_the_Smallest_Character-E",
+        "peekOfCode": "class Solution:\n    def numSmallerByFrequency(self, queries: List[str], words: List[str]) -> List[int]:\n        def smallestFreq(word: str) -> int:\n            counter = [0 for i in range(26)]\n            for c in word:\n                counter[ord(c) - ord('a')] += 1\n            for c in counter:\n                if c:\n                    return c\n        word_freqs = sorted(map(smallestFreq, words))",
+        "detail": "python.leetcode.1170-Compare_Strings_by_Frequency_of_the_Smallest_Character-E",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 6,
+        "importPath": "python.leetcode.1249-Minimum_Remove_to_Make_Valid_Parentheness-M",
+        "description": "python.leetcode.1249-Minimum_Remove_to_Make_Valid_Parentheness-M",
+        "peekOfCode": "class Solution:\n    def minRemoveToMakeValid(self, s: str) -> str:\n        def removes(s, lc, rc):\n            stk = 0\n            res = ''\n            for c in s:\n                if c == lc:\n                    stk += 1\n                if c == rc:\n                    stk -= 1",
+        "detail": "python.leetcode.1249-Minimum_Remove_to_Make_Valid_Parentheness-M",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 6,
+        "importPath": "python.leetcode.1463-Cherry_Pickup_II-H",
+        "description": "python.leetcode.1463-Cherry_Pickup_II-H",
+        "peekOfCode": "class Solution:\n    def cherryPickup(self, grid: List[List[int]]) -> int:\n        def get_score(x, y0, y1):\n            return grid[x][y0] if y0 == y1 else grid[x][y0] + grid[x][y1]\n        m, n = len(grid), len(grid[0])\n        memo = dict()\n        memo[(0, n-1)] = get_score(0, 0, n-1)\n        for x in range(1, m):\n            next_memo = dict()\n            for y0 in range(n):",
+        "detail": "python.leetcode.1463-Cherry_Pickup_II-H",
+        "documentation": {}
+    },
+    {
+        "label": "SparseVector",
+        "kind": 6,
+        "importPath": "python.leetcode.1570-Dot_Product_of_Two_Sparse_Vectors-M",
+        "description": "python.leetcode.1570-Dot_Product_of_Two_Sparse_Vectors-M",
+        "peekOfCode": "class SparseVector:\n    def __init__(self, nums: List[int]):\n        v = []\n        for i, n in enumerate(nums):\n            if n:\n                v.append((i, n))\n        self._v = v\n    # Return the dotProduct of two sparse vectors\n    def dotProduct(self, vec: 'SparseVector') -> int:\n        res = 0",
+        "detail": "python.leetcode.1570-Dot_Product_of_Two_Sparse_Vectors-M",
+        "documentation": {}
+    },
+    {
+        "label": "Node",
+        "kind": 6,
+        "importPath": "python.leetcode.1650-Lowest_Common_Ancestor_of_a_Binary_Tree-M",
+        "description": "python.leetcode.1650-Lowest_Common_Ancestor_of_a_Binary_Tree-M",
+        "peekOfCode": "class Node:\n    def __init__(self, val):\n        self.val = val\n        self.left = None\n        self.right = None\n        self.parent = None\n\"\"\"\nclass Solution:\n    def lowestCommonAncestor(self, p: 'Node', q: 'Node') -> 'Node':\n        def get_ancestors(node):",
+        "detail": "python.leetcode.1650-Lowest_Common_Ancestor_of_a_Binary_Tree-M",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 6,
+        "importPath": "python.leetcode.1650-Lowest_Common_Ancestor_of_a_Binary_Tree-M",
+        "description": "python.leetcode.1650-Lowest_Common_Ancestor_of_a_Binary_Tree-M",
+        "peekOfCode": "class Solution:\n    def lowestCommonAncestor(self, p: 'Node', q: 'Node') -> 'Node':\n        def get_ancestors(node):\n            ancestors = []\n            while node:\n                ancestors.append(node)\n                node = node.parent\n            return ancestors\n        pa = get_ancestors(p)\n        pa_set = set(pa)",
+        "detail": "python.leetcode.1650-Lowest_Common_Ancestor_of_a_Binary_Tree-M",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 6,
+        "importPath": "python.leetcode.1706-Where_Will_the_Ball_Fall-M",
+        "description": "python.leetcode.1706-Where_Will_the_Ball_Fall-M",
+        "peekOfCode": "class Solution:\n    def findBall(self, grid: List[List[int]]) -> List[int]:\n        m, n = len(grid), len(grid[0])\n        fall = list(range(n))\n        for i in range(m):\n            next_fall = [-1 for _ in range(n)]\n            for j in range(n):\n                if grid[i][j] == 1:\n                    if j > 0 and grid[i][j-1] == 1:\n                        next_fall[j] = fall[j-1]",
+        "detail": "python.leetcode.1706-Where_Will_the_Ball_Fall-M",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 6,
+        "importPath": "python.leetcode.1727-Largest_Submatrix_With_Rearrangements-M",
+        "description": "python.leetcode.1727-Largest_Submatrix_With_Rearrangements-M",
+        "peekOfCode": "class Solution:\n    def toColumnMajor(self, matrix):\n        m, n = len(matrix), len(matrix[0])\n        return [[matrix[i][j] for i in range(m)] for j in range(n)]\n    def largestSubmatrix(self, matrix: List[List[int]]) -> int:\n        return self.largestSubmatrixImpl1(matrix)\n    # Space: O(N^2); Time: O(N^3)\n    def largestSubmatrixImpl0(self, matrix: List[List[int]]) -> int:\n        m, n = len(matrix), len(matrix[0])\n        matrix= self.toColumnMajor(matrix)",
+        "detail": "python.leetcode.1727-Largest_Submatrix_With_Rearrangements-M",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 6,
+        "importPath": "python.leetcode.1739-Building_Boxes-H",
+        "description": "python.leetcode.1739-Building_Boxes-H",
+        "peekOfCode": "class Solution:\n    def minimumBoxes(self, n: int) -> int:\n        perfectBoxesRes = []\n        max_height = 1\n        for i in range(1, n + 1):\n            cnt = perfectBoxes(i)\n            max_height = i\n            if cnt == n:\n                return i\n            if cnt > n:",
+        "detail": "python.leetcode.1739-Building_Boxes-H",
+        "documentation": {}
+    },
+    {
+        "label": "perfectBoxes",
+        "kind": 2,
+        "importPath": "python.leetcode.1739-Building_Boxes-H",
+        "description": "python.leetcode.1739-Building_Boxes-H",
+        "peekOfCode": "def perfectBoxes(h: int) -> int:\n    if h in _perfectBoxes_cache:\n        return _perfectBoxes_cache[h]\n    if h == 1:\n        return 1\n    cnt = perfectBoxes(h - 1) + baseArea(h)\n    _perfectBoxes_cache[h] = cnt\n    return cnt\ndef baseArea(h : int) -> int:\n    cnt = ((1 + h) * h) // 2",
+        "detail": "python.leetcode.1739-Building_Boxes-H",
+        "documentation": {}
+    },
+    {
+        "label": "baseArea",
+        "kind": 2,
+        "importPath": "python.leetcode.1739-Building_Boxes-H",
+        "description": "python.leetcode.1739-Building_Boxes-H",
+        "peekOfCode": "def baseArea(h : int) -> int:\n    cnt = ((1 + h) * h) // 2\n    return cnt\nclass Solution:\n    def minimumBoxes(self, n: int) -> int:\n        perfectBoxesRes = []\n        max_height = 1\n        for i in range(1, n + 1):\n            cnt = perfectBoxes(i)\n            max_height = i",
+        "detail": "python.leetcode.1739-Building_Boxes-H",
+        "documentation": {}
+    },
+    {
+        "label": "_perfectBoxes_cache",
+        "kind": 5,
+        "importPath": "python.leetcode.1739-Building_Boxes-H",
+        "description": "python.leetcode.1739-Building_Boxes-H",
+        "peekOfCode": "_perfectBoxes_cache = {}\ndef perfectBoxes(h: int) -> int:\n    if h in _perfectBoxes_cache:\n        return _perfectBoxes_cache[h]\n    if h == 1:\n        return 1\n    cnt = perfectBoxes(h - 1) + baseArea(h)\n    _perfectBoxes_cache[h] = cnt\n    return cnt\ndef baseArea(h : int) -> int:",
+        "detail": "python.leetcode.1739-Building_Boxes-H",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 6,
+        "importPath": "python.leetcode.1751-Maximum_Number_of_Events_That_Can_Be_Attended_II-M",
+        "description": "python.leetcode.1751-Maximum_Number_of_Events_That_Can_Be_Attended_II-M",
+        "peekOfCode": "class Solution:\n    def maxValue(self, events: List[List[int]], k: int) -> int:\n        # sort events based on end times\n        sorted_events = sorted(events, key=lambda x: x[1])\n        sorted_timestamps = sorted(set(e[0] for e in events).union(\n                                 set(e[1] for e in events)))\n        sorted_timestamps_index = {t : i for i, t in enumerate(sorted_timestamps)}\n        def get_index(timestamp):\n            return sorted_timestamps_index[timestamp]\n        # dynamic programming with the maximum scores of k attended events",
+        "detail": "python.leetcode.1751-Maximum_Number_of_Events_That_Can_Be_Attended_II-M",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 6,
+        "importPath": "python.leetcode.1760-Minimum_Limit_of_Balls_in_a_Bag-M",
+        "description": "python.leetcode.1760-Minimum_Limit_of_Balls_in_a_Bag-M",
+        "peekOfCode": "class Solution:\n    def minimumSize(self, nums: List[int], maxOperations: int) -> int:\n        lo = 1\n        hi = max(nums)\n        while lo < hi:\n            ops = 0\n            mid = (lo + hi) // 2\n            for n in nums:\n                ops += (n - 1) // mid\n            if ops > maxOperations:",
+        "detail": "python.leetcode.1760-Minimum_Limit_of_Balls_in_a_Bag-M",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 6,
+        "importPath": "python.leetcode.1762-Buildings_with_an_Ocean_View-M",
+        "description": "python.leetcode.1762-Buildings_with_an_Ocean_View-M",
+        "peekOfCode": "class Solution:\n    def findBuildings(self, heights: List[int]) -> List[int]:\n        res = []\n        max_h = 0\n        n = len(heights)\n        for i, h in enumerate(reversed(heights)):\n            i = n - 1 - i\n            if h > max_h:\n                res.append(i)\n            max_h = max(h, max_h)",
+        "detail": "python.leetcode.1762-Buildings_with_an_Ocean_View-M",
+        "documentation": {}
+    },
+    {
+        "label": "Solutio",
+        "kind": 6,
+        "importPath": "python.leetcode.2135-Count_Words_Obtained_After_Adding_a_Letter",
+        "description": "python.leetcode.2135-Count_Words_Obtained_After_Adding_a_Letter",
+        "peekOfCode": "class Solution {\npublic:\n    int wordCount(vector<string>& startWords, vector<string>& targetWords) {\n        auto get_key = [](const std::string& s) {\n            int key = 0;\n            for (const auto& c : s) {\n                key |= 1 << (c - 'a');\n            }\n            return key;\n        };",
+        "detail": "python.leetcode.2135-Count_Words_Obtained_After_Adding_a_Letter",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 6,
+        "importPath": "python.leetcode.2145-Count_the_Hidden_Sequences-M",
+        "description": "python.leetcode.2145-Count_the_Hidden_Sequences-M",
+        "peekOfCode": "class Solution:\n    def numberOfArrays(self, differences: List[int], lower: int, upper: int) -> int:\n        accu = 0\n        min_diff, max_diff = 0, 0\n        for d in differences:\n            accu += d\n            min_diff = min(min_diff, accu)\n            max_diff = max(max_diff, accu)\n        starting = lower - min_diff\n        ending = upper - max_diff",
+        "detail": "python.leetcode.2145-Count_the_Hidden_Sequences-M",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 6,
+        "importPath": "python.leetcode.2285-Maximum_Total_Importance_of_Roads-M",
+        "description": "python.leetcode.2285-Maximum_Total_Importance_of_Roads-M",
+        "peekOfCode": "class Solution:\n    def maximumImportance(self, n: int, roads: List[List[int]]) -> int:\n        weights = [0 for _ in range(n)]\n        for r in roads:\n            weights[r[0]] += 1\n            weights[r[1]] += 1\n        return sum(i * w for i, w in zip(range(n, 0, -1), reversed(sorted(weights))))",
+        "detail": "python.leetcode.2285-Maximum_Total_Importance_of_Roads-M",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 6,
+        "importPath": "python.leetcode.2472-Maximum_Number_of_Non-overlapping_Palindrome_Substrings-H",
+        "description": "python.leetcode.2472-Maximum_Number_of_Non-overlapping_Palindrome_Substrings-H",
+        "peekOfCode": "class Solution(object):\n    def maxPalindromes(self, s, k):\n        \"\"\"\n        :type s: str\n        :type k: int\n        :rtype: int\n        \"\"\"\n        n = len(s)\n        is_palindrome = [[False] * n for _ in range(n)]\n        for d in range(n):",
+        "detail": "python.leetcode.2472-Maximum_Number_of_Non-overlapping_Palindrome_Substrings-H",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 6,
+        "importPath": "python.leetcode.2517-Maximum_Tastiness_of_Candy_Basket-M",
+        "description": "python.leetcode.2517-Maximum_Tastiness_of_Candy_Basket-M",
+        "peekOfCode": "class Solution(object):\n    def maximumTastiness(self, price, k):\n        \"\"\"\n        :type price: List[int]\n        :type k: int\n        :rtype: int\n        \"\"\"\n        price = sorted(price)\n        hi, lo = price[-1] - price[0], 0\n        n = len(price)",
+        "detail": "python.leetcode.2517-Maximum_Tastiness_of_Candy_Basket-M",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 6,
+        "importPath": "python.leetcode.2588-Count_the_Number_of_Beautiful_Subarrays-M",
+        "description": "python.leetcode.2588-Count_the_Number_of_Beautiful_Subarrays-M",
+        "peekOfCode": "class Solution(object):\n    def beautifulSubarrays(self, nums):\n        \"\"\"\n        :type nums: List[int]\n        :rtype: int\n        \"\"\"\n        cnt = 0\n        xor_cnts = collections.defaultdict(int)\n        xor_cnts[0] = 1\n        x = 0",
+        "detail": "python.leetcode.2588-Count_the_Number_of_Beautiful_Subarrays-M",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 6,
+        "importPath": "python.leetcode.2593-Find_Score_of_an_Array_After_Marking_All_Elements-M",
+        "description": "python.leetcode.2593-Find_Score_of_an_Array_After_Marking_All_Elements-M",
+        "peekOfCode": "class Solution(object):\n    def findScore(self, nums):\n        \"\"\"\n        :type nums: List[int]\n        :rtype: int\n        \"\"\"\n        score = 0\n        marked = [False for _ in range(len(nums) + 2)]\n        for num, idx in sorted((n, i) for i, n in enumerate(nums)):\n            if marked[idx + 1]:",
+        "detail": "python.leetcode.2593-Find_Score_of_an_Array_After_Marking_All_Elements-M",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 6,
+        "importPath": "python.leetcode.2594-Minimum_Time_to_Repair_Cars-M",
+        "description": "python.leetcode.2594-Minimum_Time_to_Repair_Cars-M",
+        "peekOfCode": "class Solution(object):\n    def repairCars(self, ranks, cars):\n        \"\"\"\n        :type ranks: List[int]\n        :type cars: int\n        :rtype: int\n        \"\"\"\n        lo = 0\n        hi = max(ranks) * cars * cars\n        while lo < hi:",
+        "detail": "python.leetcode.2594-Minimum_Time_to_Repair_Cars-M",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 6,
+        "importPath": "python.leetcode.2661-First_Completely_Painted_Row_or_Column-M",
+        "description": "python.leetcode.2661-First_Completely_Painted_Row_or_Column-M",
+        "peekOfCode": "class Solution(object):\n    def firstCompleteIndex(self, arr, mat):\n        \"\"\"\n        :type arr: List[int]\n        :type mat: List[List[int]]\n        :rtype: int\n        \"\"\"\n        n_row, n_col = len(mat), len(mat[0])\n        c_row = [0 for _ in range(n_row)]\n        c_col = [0 for _ in range(n_col)]",
+        "detail": "python.leetcode.2661-First_Completely_Painted_Row_or_Column-M",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 6,
+        "importPath": "python.leetcode.2684-Maximum_Number_of_Moves_in_a_Grid-M",
+        "description": "python.leetcode.2684-Maximum_Number_of_Moves_in_a_Grid-M",
+        "peekOfCode": "class Solution(object):\n    def maxMoves(self, grid):\n        \"\"\"\n        :type grid: List[List[int]]\n        :rtype: int\n        \"\"\"\n        m, n = len(grid), len(grid[0])\n        moves = [[0 for _ in range(n)] for _ in range(m)]\n        for i in range(m):\n            moves[i][0] = 1",
+        "detail": "python.leetcode.2684-Maximum_Number_of_Moves_in_a_Grid-M",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 6,
+        "importPath": "python.leetcode.2770-Maximum_Number_of_Jumps_to_Reach_the_Last_Index-M",
+        "description": "python.leetcode.2770-Maximum_Number_of_Jumps_to_Reach_the_Last_Index-M",
+        "peekOfCode": "class Solution(object):\n    def maximumJumps(self, nums, target):\n        \"\"\"\n        :type nums: List[int]\n        :type target: int\n        :rtype: int\n        \"\"\"\n        n = len(nums)\n        max_jumps = [-1] * n\n        max_jumps[0] = 0",
+        "detail": "python.leetcode.2770-Maximum_Number_of_Jumps_to_Reach_the_Last_Index-M",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 6,
+        "importPath": "python.leetcode.2789-Largest_Element_in_an_Array_after_Merge_Operations-M",
+        "description": "python.leetcode.2789-Largest_Element_in_an_Array_after_Merge_Operations-M",
+        "peekOfCode": "class Solution(object):\n    def maxArrayValue(self, nums):\n        \"\"\"\n        :type nums: List[int]\n        :rtype: int\n        \"\"\"\n        n = len(nums)\n        res = nums[n-1]\n        cur = nums[n-1]\n        for i in range(n-2, -1, -1):",
+        "detail": "python.leetcode.2789-Largest_Element_in_an_Array_after_Merge_Operations-M",
+        "documentation": {}
+    },
+    {
+        "label": "Solution",
+        "kind": 6,
+        "importPath": "python.leetcode.2808-Minimum_Seconds_to_Equalize_a_Circular_Array-M",
+        "description": "python.leetcode.2808-Minimum_Seconds_to_Equalize_a_Circular_Array-M",
+        "peekOfCode": "class Solution(object):\n    def minimumSeconds(self, nums):\n        \"\"\"\n        :type nums: List[int]\n        :rtype: int\n        \"\"\"\n        n = len(nums)\n        res = n\n        ind = collections.defaultdict(list)\n        for idx, num in enumerate(nums):",
+        "detail": "python.leetcode.2808-Minimum_Seconds_to_Equalize_a_Circular_Array-M",
+        "documentation": {}
+    },
+    {
+        "label": "DFSError",
+        "kind": 6,
+        "importPath": "python.other_sources.Go_Game",
+        "description": "python.other_sources.Go_Game",
+        "peekOfCode": "class DFSError(Exception):\n    pass\ndef go_name(board: typing.List[typing.List], x: int, y: int) -> int:\n    m = len(board)\n    if not m:\n        return 0\n    n = len(board[0])\n    if not n:\n        return 0\n    def dfs(i: int, j: int, visit) -> typing.List:",
+        "detail": "python.other_sources.Go_Game",
+        "documentation": {}
+    },
+    {
+        "label": "Test",
+        "kind": 6,
+        "importPath": "python.other_sources.Go_Game",
+        "description": "python.other_sources.Go_Game",
+        "peekOfCode": "class Test(unittest.TestCase):\n    def test_case0(self):\n        board = [[e, e, e, e, b, b, b],\n                 [e, e, e, e, b, w, b],\n                 [e, e, e, e, b, e, b],\n                 [e, e, e, e, e, e, e]]\n        row, col = 2, 5\n        self.assertEqual(go_name(board, row, col), 1)\n    def test_case1(self):\n        board = [[e, e, e, e, b, b, b],",
+        "detail": "python.other_sources.Go_Game",
+        "documentation": {}
+    },
+    {
+        "label": "go_name",
+        "kind": 2,
+        "importPath": "python.other_sources.Go_Game",
+        "description": "python.other_sources.Go_Game",
+        "peekOfCode": "def go_name(board: typing.List[typing.List], x: int, y: int) -> int:\n    m = len(board)\n    if not m:\n        return 0\n    n = len(board[0])\n    if not n:\n        return 0\n    def dfs(i: int, j: int, visit) -> typing.List:\n        if board[i][j] == 'b':\n            return []",
+        "detail": "python.other_sources.Go_Game",
+        "documentation": {}
+    },
+    {
+        "label": "recursive_search_question_list",
+        "kind": 2,
+        "importPath": "tools.code_merger",
+        "description": "tools.code_merger",
+        "peekOfCode": "def recursive_search_question_list(page_elem: BeautifulSoup) -> BeautifulSoup:\n    question_list = page_elem.find('div',\n                                   attrs={'class': 'table-responsive question-list-table'})\n    if question_list:\n        return question_list.find('table').find('tbody')\n    for page_elem in page_elem.find_all():\n        question_list = recursive_search_question_list(page_elem)\n        return question_list\ndef populate_question_table(question_list: BeautifulSoup) \\\n        -> typing.Sequence[typing.Tuple[str, str]]:",
+        "detail": "tools.code_merger",
+        "documentation": {}
+    },
+    {
+        "label": "populate_question_table",
+        "kind": 2,
+        "importPath": "tools.code_merger",
+        "description": "tools.code_merger",
+        "peekOfCode": "def populate_question_table(question_list: BeautifulSoup) \\\n        -> typing.Sequence[typing.Tuple[str, str]]:\n    tbl = []\n    for question in question_list.find_all('tr'):\n        q = question.find_all('td')[2]\n        name = q.get('value').replace(' ', '_')\n        line = q.find('div').find('a').get('href')\n        tbl.append((name, line))\n    return tbl\ndef generate_question_table(question_set_html: str) -> typing.Sequence[typing.Tuple[str, str]]:",
+        "detail": "tools.code_merger",
+        "documentation": {}
+    },
+    {
+        "label": "generate_question_table",
+        "kind": 2,
+        "importPath": "tools.code_merger",
+        "description": "tools.code_merger",
+        "peekOfCode": "def generate_question_table(question_set_html: str) -> typing.Sequence[typing.Tuple[str, str]]:\n    with open(question_set_html) as html:\n        raw_content = html.read()\n    content = BeautifulSoup(raw_content, 'html.parser')\n    question_list = recursive_search_question_list(content)\n    question_table = populate_question_table(question_list)\n    return question_table\nCodeFile = collections.namedtuple('CodeFile', ['id', 'level', 'version', 'language',\n                                               'content', 'create_time'])\ndef load_code_files(src_dir: str) -> typing.Mapping[str, typing.Sequence[CodeFile]]:",
+        "detail": "tools.code_merger",
+        "documentation": {}
+    },
+    {
+        "label": "load_code_files",
+        "kind": 2,
+        "importPath": "tools.code_merger",
+        "description": "tools.code_merger",
+        "peekOfCode": "def load_code_files(src_dir: str) -> typing.Mapping[str, typing.Sequence[CodeFile]]:\n    files = collections.defaultdict(list)\n    for (dirpath, dirnames, filenames) in os.walk(src_dir):\n        for filename in filenames:\n            filepath = os.path.join(dirpath, filename)\n            if re.match(\"[0-9]{1,4}-[EMH].*\\.*\", filename):\n                segments = filename.split('-')\n                if len(segments) == 2:\n                    qid = int(segments[0])\n                    level, pl = segments[1].split('.')",
+        "detail": "tools.code_merger",
+        "documentation": {}
+    },
+    {
+        "label": "rename_code_files",
+        "kind": 2,
+        "importPath": "tools.code_merger",
+        "description": "tools.code_merger",
+        "peekOfCode": "def rename_code_files(src_dir: str, dst_dir: str) -> None:\n    files = load_code_files(src_dir)\n    table = generate_question_table('problems_leetcode.html')\n    for _, file_list in files.items():\n        base_file = file_list[0]\n        filename = \"{id}-{name}-{level}.{pl}\".format(id=str(base_file.id).zfill(4),\n                                                     name=table[base_file.id - 1][0],\n                                                     level=base_file.level,\n                                                     pl=base_file.language)\n        content = []",
+        "detail": "tools.code_merger",
+        "documentation": {}
+    },
+    {
+        "label": "CodeFile",
+        "kind": 5,
+        "importPath": "tools.code_merger",
+        "description": "tools.code_merger",
+        "peekOfCode": "CodeFile = collections.namedtuple('CodeFile', ['id', 'level', 'version', 'language',\n                                               'content', 'create_time'])\ndef load_code_files(src_dir: str) -> typing.Mapping[str, typing.Sequence[CodeFile]]:\n    files = collections.defaultdict(list)\n    for (dirpath, dirnames, filenames) in os.walk(src_dir):\n        for filename in filenames:\n            filepath = os.path.join(dirpath, filename)\n            if re.match(\"[0-9]{1,4}-[EMH].*\\.*\", filename):\n                segments = filename.split('-')\n                if len(segments) == 2:",
+        "detail": "tools.code_merger",
+        "documentation": {}
+    }
+]

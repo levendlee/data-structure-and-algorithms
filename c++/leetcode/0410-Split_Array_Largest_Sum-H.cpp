@@ -63,3 +63,49 @@ public:
         return lo;
     }
 };
+
+//
+
+class Solution
+{
+public:
+    int splitArray(vector<int> &nums, int k)
+    {
+        int lo = *max_element(nums.begin(), nums.end());
+        int hi = accumulate(nums.begin(), nums.end(), 0);
+
+        const int n = nums.size();
+        while (lo < hi)
+        {
+            int mid = (lo + hi) / 2;
+            int sum = 0, split = 0;
+            for (int i = 0; i < n; ++i)
+            {
+                if (sum + nums[i] > mid)
+                {
+                    ++split;
+                    sum = nums[i];
+                }
+                else
+                {
+                    sum += nums[i];
+                }
+            }
+            if (sum)
+            {
+                ++split;
+            }
+
+            if (split > k)
+            {
+                lo = mid + 1;
+            }
+            else
+            {
+                hi = mid;
+            }
+        }
+
+        return lo;
+    }
+};
